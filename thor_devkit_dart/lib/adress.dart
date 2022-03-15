@@ -1,7 +1,19 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:pointycastle/digests/keccak.dart';
 import 'package:thor_devkit_dart/utils.dart';
+
+///Check if input is an adress
+bool isAdress(String input){
+  final adressFormt = RegExp(r'^0x[0-9a-f]{40}$', caseSensitive: false);
+if (adressFormt.hasMatch(input)) {
+  return true;
+} else {
+  return false;
+}
+}
+
 
 /// Convert an uncompressed public key to address bytes. (20 bytes)
 Uint8List publicKeyToAdressBytes(Uint8List input) {
@@ -23,15 +35,15 @@ String publicKeyToAdressString(Uint8List input) {
   return prepend0x(result);
 }
 
+    /// encode the address to checksumed address that is compatible with eip-55
+    /// @param address input address
 String toChecksumAddress(String input) {
-
   String body = remove0x(input).toLowerCase();
   final digest = KeccakDigest(256);
+  var x = utf8.encode(body) as Uint8List;
+  var h = digest.process(x);
 
-  var h = digest.process(hexToBytes(body));
   String hash = bytesToHex(h);
-
-  //List<String> parts = <String>[];
   String parts = '0x';
 
   for (int i = 0; i < body.length; i++) {
