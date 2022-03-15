@@ -49,3 +49,7 @@ Uint8List hexToBytes(String input) {
   var result = hex.decode(input) as Uint8List;
   return result;
 }
+
+BigInt hexToInt(String input){
+  return BigInt.parse(input, radix: 16);
+}
