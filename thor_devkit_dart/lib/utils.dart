@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
+import 'package:pointycastle/src/utils.dart';
 
 // Remove the 0x04 bytes at the begin of a Unit8List.
 ///
@@ -46,10 +47,24 @@ String bytesToHex(Uint8List input) {
 }
 
 Uint8List hexToBytes(String input) {
-  var result = hex.decode(input) as Uint8List;
+  var result = hex.decode(remove0x(input)) as Uint8List;
   return result;
 }
 
 BigInt hexToInt(String input){
   return BigInt.parse(input, radix: 16);
 }
+
+String intToHex(BigInt? input){
+  return input!.toRadixString(16);
+}
+
+Uint8List intToBytes(BigInt number) {
+  assert(!number.isNegative);
+  return encodeBigIntAsUnsigned(number);
+}
+
+BigInt bytesToInt(Uint8List bytes) {
+  return decodeBigIntWithSign(1, bytes);
+}
+
