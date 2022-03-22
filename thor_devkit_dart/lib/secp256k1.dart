@@ -2,6 +2,8 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:pointycastle/export.dart';
 import 'package:pointycastle/pointycastle.dart';
+import 'package:thor_devkit_dart/thor_signature.dart';
+import 'package:web3dart/crypto.dart' as web3dart;
 import 'utils.dart';
 
 /// MAX is the maximum number used as private key.
@@ -12,7 +14,7 @@ final BigInt _maxForPrivateKeyInt = hexToInt(
 
 /// Test if the private key is valid.
 ///
-/// @param privateKey byte[] of a private key.
+/// @param privateKey Uint8List of a private key.
 /// @return true/false
 bool isValidPrivateKey(Uint8List privateKey) {
   var hexKey = bytesToHex(privateKey);
@@ -32,7 +34,7 @@ bool isValidPrivateKey(Uint8List privateKey) {
 
 /// If the message hash is of valid length or format.
 ///
-/// @param messageHash byte[] of message hash.
+/// @param messageHash Uint8List of message hash.
 /// @return true/false
 bool isValidMessageHash(Uint8List messageHash) {
   return messageHash.length == 32;
@@ -67,30 +69,17 @@ Uint8List derivePublicKeyFromBytes(Uint8List privateKey, bool compressed) {
   return derivePublicKey(bytesToInt(privateKey), compressed);
 }
 
-//ECSignature  a = ECSignature(r, s);
+/// Signs the hashed data in [messageHash] using the given private key and returns a ThorSignature.
+ThorSignature sign(Uint8List messageHash, Uint8List privateKey) {
+  final msgSig = web3dart.sign(messageHash, privateKey);
+  final ecSig = ECSignature(msgSig.r, msgSig.s);
 
-
-
-
-
-
-
-
-
-
-
-/*
-  Uint8List sign(Uint8List message, Uint8List keyBytes) {
-    ECPrivateKey key = ECPrivateKey(hexToInt(bytesToHex(keyBytes)), ECCurve_secp256k1())
-
-  final verifier = ECDSASigner(SHA256Digest())
-
-    ..init(
-      true, // verify vs sign
-      PrivateKeyParameter(key), // key is an ECPrivateKey
-    );
-    ECSignature a = verifier.generateSignature(message) as ECSignature;
- return  a.normalize(curveParams);
+  return ThorSignature(ecSig, msgSig.v);
 }
-*/
 
+Uint8List recover(Uint8List messageHash, ThorSignature signature) {
+  return web3dart.ecRecover(
+      messageHash,
+      web3dart.MsgSignature(
+          signature.signature.r, signature.signature.s, signature.v));
+}

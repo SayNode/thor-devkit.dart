@@ -1,5 +1,8 @@
+import 'dart:convert';
+import 'dart:math';
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
+import 'package:pointycastle/api.dart';
 import 'package:pointycastle/src/utils.dart';
 
 // Remove the 0x04 bytes at the begin of a Unit8List.
@@ -38,8 +41,6 @@ String remove0x(String input) {
   }
 }
 
-
-
 ///Converts Unit8List into Hex
 String bytesToHex(Uint8List input) {
   String result = hex.encode(input);
@@ -51,11 +52,11 @@ Uint8List hexToBytes(String input) {
   return result;
 }
 
-BigInt hexToInt(String input){
+BigInt hexToInt(String input) {
   return BigInt.parse(input, radix: 16);
 }
 
-String intToHex(BigInt? input){
+String intToHex(BigInt? input) {
   return input!.toRadixString(16);
 }
 
@@ -68,3 +69,20 @@ BigInt bytesToInt(Uint8List bytes) {
   return decodeBigIntWithSign(1, bytes);
 }
 
+Uint8List asciiToBytes(String input) {
+  AsciiCodec a = AsciiCodec();
+  return a.encode(input);
+}
+
+String bytesToAscii(Uint8List input) {
+  AsciiCodec a = AsciiCodec();
+  return a.decode(input);
+}
+
+///Get random Uint8List of a given length.
+Uint8List getRandomBytes(int length) {
+  final Random _random = Random.secure();
+  var values = List<int>.generate(length, (i) => _random.nextInt(256));
+
+  return Uint8List.fromList(values);
+}
