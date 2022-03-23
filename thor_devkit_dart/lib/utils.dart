@@ -3,6 +3,8 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:pointycastle/api.dart';
+import 'package:pointycastle/digests/sha512.dart';
+import 'package:pointycastle/macs/hmac.dart';
 import 'package:pointycastle/src/utils.dart';
 
 // Remove the 0x04 bytes at the begin of a Unit8List.
@@ -85,4 +87,13 @@ Uint8List getRandomBytes(int length) {
   var values = List<int>.generate(length, (i) => _random.nextInt(256));
 
   return Uint8List.fromList(values);
+}
+
+Uint8List hmacSha512(Uint8List key, Uint8List input) {
+  HMac hMac = HMac.withDigest(SHA512Digest());
+  hMac.init(KeyParameter(key));
+  hMac.update(input, 0, input.length);
+  Uint8List out = Uint8List(64);
+  hMac.doFinal(out, 0);
+  return out;
 }

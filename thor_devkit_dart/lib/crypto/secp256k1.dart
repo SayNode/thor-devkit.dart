@@ -2,9 +2,9 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:pointycastle/export.dart';
 import 'package:pointycastle/pointycastle.dart';
-import 'package:thor_devkit_dart/thor_signature.dart';
+import 'package:thor_devkit_dart/crypto/thor_signature.dart';
 import 'package:web3dart/crypto.dart' as web3dart;
-import 'utils.dart';
+import '../utils.dart';
 
 /// MAX is the maximum number used as private key.
 final Uint8List _maxForPrivateKeyByte = hexToBytes(

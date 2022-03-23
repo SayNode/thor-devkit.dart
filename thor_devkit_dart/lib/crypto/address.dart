@@ -4,10 +4,10 @@ import 'dart:typed_data';
 import 'package:pointycastle/digests/keccak.dart';
 import 'package:thor_devkit_dart/utils.dart';
 
-///Check if input is an adress
-bool isAdress(String input){
-  final adressFormt = RegExp(r'^0x[0-9a-f]{40}$', caseSensitive: false);
-if (adressFormt.hasMatch(input)) {
+///Check if input is an address
+bool isAddress(String input){
+  final addressFormt = RegExp(r'^0x[0-9a-f]{40}$', caseSensitive: false);
+if (addressFormt.hasMatch(input)) {
   return true;
 } else {
   return false;
@@ -16,7 +16,7 @@ if (adressFormt.hasMatch(input)) {
 
 
 /// Convert an uncompressed public key to address bytes. (20 bytes)
-Uint8List publicKeyToAdressBytes(Uint8List input) {
+Uint8List publicKeyToAddressBytes(Uint8List input) {
   final digest = KeccakDigest(256);
   //remove 0x04(first byte)
   var slice = remove0x04(input);
@@ -28,9 +28,9 @@ Uint8List publicKeyToAdressBytes(Uint8List input) {
 }
 
 ///Convert a public key to address, in string format.
-String publicKeyToAdressString(Uint8List input) {
-  var p = publicKeyToAdressBytes(input);
-  //turn into String adress
+String publicKeyToAddressString(Uint8List input) {
+  var p = publicKeyToAddressBytes(input);
+  //turn into String address
   var result = bytesToHex(p);
   return prepend0x(result);
 }
