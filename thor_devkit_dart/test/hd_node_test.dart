@@ -17,7 +17,7 @@ void main() {
   HDNode topMostNode = HDNode.fromMnemonic(words);
   var node = HDNode.fromMnemonic(words);
   test('Test fromMnemonic()', () {
-    List<String> words = [
+    List<String> words2 = [
       'share',
       'adjust',
       'glass',
@@ -43,11 +43,12 @@ void main() {
       'strong',
       'acquire',
     ];
+    var node2 = HDNode.fromMnemonic(words2);
 
     expect(
         hexToBytes(
             'b724aa16d6face0f461ce2245b60bbfcd8676ec96e8fef615ea626e0aa88cbf0'),
-        node.derive(0).privateKey);
+        node2.derive(0).privateKey);
   });
 
   test('Test fromMnemonic() with data from thor-devkit.java', () {

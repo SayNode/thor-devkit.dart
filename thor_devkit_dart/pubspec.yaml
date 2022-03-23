@@ -17,6 +17,7 @@ dependencies:
   bip32: ^2.0.0
   base_x: ^2.0.0
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

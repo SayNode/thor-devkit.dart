@@ -34,19 +34,21 @@ class HDNode {
   HDNode(this.node);
 
   ///This will generate a top-most HDNode for VET wallets.
-  static HDNode fromSeed(Uint8List seed) {
+  factory HDNode.fromSeed(Uint8List seed) {
     BIP32 master = BIP32.fromSeed(seed);
     BIP32 node = master.derivePath(accountDerivationPath);
     return HDNode(node);
   }
 
   ///This will generate a top-most HDNode for VET wallets.
-  static HDNode fromMnemonic(List<String> words) {
+  factory HDNode.fromMnemonic(List<String> words) {
     if (!Mnemonic.validate(words)) {
       throw Exception("The words not valid!");
     }
     Uint8List seed = Mnemonic.deriveSeed(words);
-    return fromSeed(seed);
+    BIP32 master = BIP32.fromSeed(seed);
+    BIP32 node = master.derivePath(accountDerivationPath);
+    return HDNode(node);
   }
 
   ///Derive child HDNode from an existing HDNode.
