@@ -1,10 +1,7 @@
 import 'dart:typed_data';
-
-import 'package:base_x/base_x.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:thor_devkit_dart/crypto/hd_node.dart';
 import 'package:thor_devkit_dart/utils.dart';
-import 'package:web3dart/crypto.dart' show compressPublicKey;
 
 void main() {
   String sentence =

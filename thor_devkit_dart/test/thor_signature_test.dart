@@ -8,12 +8,15 @@ import 'package:thor_devkit_dart/utils.dart';
 void main() {
   test('signature from bytes', () {});
 
+
+//FIXME: Fix this test, the matcher is prbably wrong
   test('serialize', () {
     Uint8List priv = hexToBytes(
         "7582be841ca040aa940fff6c05773129e135623e41acce3e0b8ba520dc1ae26a");
     final messageHash = keccak256(asciiToBytes('hello world'));
     Uint8List sigBytes = sign(messageHash, priv).serialize();
     print(sign(messageHash, priv).v);
+    print(hexToBytes('21fbf0696d5e0aa2ef41a2b4ffb623bcaf070461d61cf7251c74161f82fec3a4370854bc0a34b3ab487c1bc021cd318c734c51ae29374f2beb0e6f2dd49b4bf41c')[64]);
     expect(
         sigBytes,
         hexToBytes(

@@ -7,11 +7,9 @@ void main() {
   test('generate mnemonic words', () {
     List<String> words;
     words = Mnemonic.generate(128);
-    print(words);
     expect(12, words.length);
 
     words = Mnemonic.generate(192);
-    print(words);
     expect(18, words.length);
 
     expect(() => Mnemonic.generate(1), throwsException);
@@ -96,12 +94,31 @@ void main() {
       'acquire',
     ];
 
-    print(bytesToHex(Mnemonic.derivePrivateKey(words)));
+    expect(
+        Mnemonic.derivePrivateKey(words),
+        hexToBytes(
+            'b724aa16d6face0f461ce2245b60bbfcd8676ec96e8fef615ea626e0aa88cbf0'));
+  });
 
+  test('test private key', () {
+    List<String> words = [
+      'ignore',
+      'empty',
+      'bird',
+      'silly',
+      'journey',
+      'junior',
+      'ripple',
+      'have',
+      'guard',
+      'waste',
+      'between',
+      'tenant'
+    ];
 
-
-    //expect(Mnemonic.derivePrivateKey(words), hexToBytes('d59b1adddfbc86caed02dc15eecc7761f5f8464e03a8e86e641181fcdb3362ff'));
-    
-
+    expect(
+        Mnemonic.derivePrivateKey(words),
+        hexToBytes(
+            "27196338e7d0b5e7bf1be1c0327c53a244a18ef0b102976980e341500f492425"));
   });
 }

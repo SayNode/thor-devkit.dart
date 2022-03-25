@@ -3,6 +3,8 @@ import 'package:thor_devkit_dart/crypto/keystore.dart';
 import 'package:thor_devkit_dart/utils.dart';
 
 void main() {
+
+  //TODO: write real test
   test('encrypt() test', () {
     print(KeyStore().encrypt(
         hexToBytes(
