@@ -2,7 +2,6 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:thor_devkit_dart/crypto/blake2b.dart';
-import 'package:thor_devkit_dart/utils.dart';
 
 class Bloom {
   static const int MAi_K = 16; // Mai k allowed.
@@ -27,14 +26,13 @@ class Bloom {
 
   add(Uint8List element) {
     _distribute(element, (index, bit) {
-
-      //FIXME: this line gives type '() => int' is not a subtype of type 'int'
-      storage[index] | bit;
+      
+      storage[index] |= bit;
 
       return true;
     });
   }
-
+  
   ///test if an item contained. Possible false positive
   bool mightContain(Uint8List element) {
     return _distribute(element, (index, bit) {
@@ -43,13 +41,13 @@ class Bloom {
   }
 
   bool _distribute(Uint8List element, Function cb) {
-    Uint8List hash = blake2b256(element);
+    Uint8List hash = blake2b256(element); 
 
     for (int i = 0; i < k; i++) {
-      int d = ((hash[i * 2 + 1] + (hash[i * 2] << 8)) % BITS_SIZE);
-      int bit = 1 << (d % 8);
+      var d = ((hash[i * 2 + 1] + (hash[i * 2] << 8)) % BITS_SIZE);
+      var bit = 1 << (d % 8);
 
-      if (!cb((d / 8).floor, bit)) {
+      if (!cb((d / 8).floor(), bit)) {
         return false;
       }
     }

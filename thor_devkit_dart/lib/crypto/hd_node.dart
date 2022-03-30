@@ -2,14 +2,12 @@ import 'dart:typed_data';
 import 'package:base_x/base_x.dart';
 import 'package:bip32/bip32.dart';
 import 'package:pointycastle/digests/sha256.dart';
-import 'package:pointycastle/ecc/curves/secp256k1.dart';
-import 'package:pointycastle/ecc/ecc_fp.dart';
 import 'package:thor_devkit_dart/crypto/address.dart';
 import 'package:thor_devkit_dart/crypto/mnemonic.dart';
 import 'package:thor_devkit_dart/utils.dart';
 import 'package:web3dart/crypto.dart' show compressPublicKey;
 
-final accountDerivationPath = "m/44'/818'/0'/0";
+const accountDerivationPath = "m/44'/818'/0'/0";
 
 // Hardened bit = the mark ' on the number.
 const int HARDENED_BIT = 0x80000000;
@@ -17,7 +15,7 @@ const int HARDENED_BIT = 0x80000000;
 // it simply adds 44', 818', 0', 0 to the path.
 // m / 44' / 818' / 0' / 0
 
-final List<int> VET_PATH = [
+const List<int> VET_PATH = [
   44 + HARDENED_BIT,
   818 + HARDENED_BIT,
   0 + HARDENED_BIT,

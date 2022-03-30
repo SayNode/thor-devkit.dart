@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 import 'package:bip39/bip39.dart' as bip39;
-import 'package:bip32/bip32.dart' as bip32;
 import 'package:thor_devkit_dart/crypto/hd_node.dart';
 import 'package:thor_devkit_dart/utils.dart';
 
@@ -18,7 +17,6 @@ class Mnemonic {
     if (!L.contains(entropyLength)) {
       throw Exception("entropyLength is wrong.");
     }
-    Uint8List entropy = getRandomBytes(entropyLength ~/ 8);
     String mnemonic = bip39.generateMnemonic(strength: entropyLength);
 
     return mnemonic.split(" ");

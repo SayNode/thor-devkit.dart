@@ -1,14 +1,10 @@
-import 'dart:math';
 import 'dart:typed_data';
 import 'package:pointycastle/export.dart';
-import 'package:pointycastle/pointycastle.dart';
 import 'package:thor_devkit_dart/crypto/thor_signature.dart';
 import 'package:web3dart/crypto.dart' as web3dart;
 import '../utils.dart';
 
 /// MAX is the maximum number used as private key.
-final Uint8List _maxForPrivateKeyByte = hexToBytes(
-    "fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141");
 final BigInt _maxForPrivateKeyInt = hexToInt(
     "fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141");
 
@@ -17,12 +13,12 @@ final BigInt _maxForPrivateKeyInt = hexToInt(
 /// @param privateKey Uint8List of a private key.
 /// @return true/false
 bool isValidPrivateKey(Uint8List privateKey) {
-  var hexKey = bytesToHex(privateKey);
-  if (hexToInt(hexKey) == 0) {
+  var hexKey = bytesToInt(privateKey);
+  if (hexKey == 0) {
     return false;
   }
 
-  if (hexToInt(hexKey) >= _maxForPrivateKeyInt) {
+  if (hexKey >= _maxForPrivateKeyInt) {
     return false;
   }
 

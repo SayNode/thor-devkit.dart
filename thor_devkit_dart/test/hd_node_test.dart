@@ -12,7 +12,6 @@ void main() {
 
   // Generate from words.
   HDNode topMostNode = HDNode.fromMnemonic(words);
-  var node = HDNode.fromMnemonic(words);
   test('Test fromMnemonic()', () {
     List<String> words2 = [
       'share',
