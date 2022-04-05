@@ -1,5 +1,6 @@
 
 import 'package:thor_devkit_dart/types/compact_fixed_blob_kind.dart';
+import 'package:thor_devkit_dart/types/nullable_fixed_blob_kind.dart';
 import 'package:thor_devkit_dart/types/numeric_kind.dart';
 
 class Transaction {
