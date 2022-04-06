@@ -1,4 +1,5 @@
 
+import 'package:thor_devkit_dart/types/clause.dart';
 import 'package:thor_devkit_dart/types/compact_fixed_blob_kind.dart';
 import 'package:thor_devkit_dart/types/nullable_fixed_blob_kind.dart';
 import 'package:thor_devkit_dart/types/numeric_kind.dart';
@@ -8,7 +9,7 @@ class Transaction {
     NumericKind chainTag =  NumericKind(1);
     CompactFixedBlobKind blockRef =  CompactFixedBlobKind(8);
     NumericKind expiration =  NumericKind(4);
-    Clause[] clauses;
+    late List<Clause> clauses;
     NumericKind gasPriceCoef =  NumericKind(1);
     NumericKind gas =  NumericKind(8);
     NullableFixedBlobKind dependsOn =  NullableFixedBlobKind(32);
