@@ -1,6 +1,5 @@
-import 'dart:convert';
+
 import 'dart:typed_data';
-import 'package:convert/convert.dart';
 import 'package:rlp/rlp.dart';
 import 'package:thor_devkit_dart/types/blob_kind.dart';
 import 'package:thor_devkit_dart/types/nullable_fixed_blob_kind.dart';

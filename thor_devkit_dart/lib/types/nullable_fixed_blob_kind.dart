@@ -12,8 +12,8 @@ class NullableFixedBlobKind {
     if (hexString != null) {
       String realHex = remove0x(hexString);
 
-      // if (realHex.length != byteLength * 2) {
-      //  throw Exception("");}
+       if (realHex.length != byteLength * 2) {
+        throw Exception("");}
 
       data = hexToBytes(realHex);
     }

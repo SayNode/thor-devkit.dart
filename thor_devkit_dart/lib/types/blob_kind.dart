@@ -24,6 +24,7 @@ class BlobKind {
     return prepend0x(bytesToHex(data));
   }
 
+  @override
   String toString() {
     return bytesToHex(data);
   }

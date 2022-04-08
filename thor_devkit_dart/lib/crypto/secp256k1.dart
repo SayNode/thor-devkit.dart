@@ -14,7 +14,7 @@ final BigInt _maxForPrivateKeyInt = hexToInt(
 /// @return true/false
 bool isValidPrivateKey(Uint8List privateKey) {
   var hexKey = bytesToInt(privateKey);
-  if (hexKey == 0) {
+  if (hexKey.toInt() == 0) {
     return false;
   }
 

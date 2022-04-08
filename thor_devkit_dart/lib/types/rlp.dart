@@ -11,7 +11,6 @@ class RlpDecoder {
 
   dynamic decode(Uint8List input) {
     _decodeLength(input);
-    assert(isList != null);
     if (!isList) {
       return input.sublist(offset, offset + length);
     } else {

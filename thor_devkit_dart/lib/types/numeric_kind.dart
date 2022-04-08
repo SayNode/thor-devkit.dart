@@ -22,9 +22,7 @@ class NumericKind {
   }
 
   static _check(BigInt big, int byteLength) {
-    if (big == null) {
-      throw Exception();
-    }
+
 
     // Less than 0.
     if (ZERO.compareTo(big) > 0) {
@@ -54,7 +52,7 @@ class NumericKind {
   }
 
   setValueBigInt(BigInt x) {
-    _check(x, this.byteLength);
+    _check(x, byteLength);
     _setBig(x);
   }
 
