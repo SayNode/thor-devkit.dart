@@ -7,7 +7,7 @@ import 'package:thor_devkit_dart/utils.dart';
 /// like: address, block_ref, data to smart contract.
 
 class BlobKind {
-  late Uint8List data; // Internal representation of this kind.
+  Uint8List? data; // Internal representation of this kind.
 
   BlobKind();
 
@@ -16,16 +16,16 @@ class BlobKind {
   }
 
   Uint8List toBytes() {
-    return data;
+    return data!;
   }
 
   String fromBytes(Uint8List data) {
-    data = data;
+    this.data = data;
     return prepend0x(bytesToHex(data));
   }
 
   @override
   String toString() {
-    return bytesToHex(data);
+    return bytesToHex(data!);
   }
 }

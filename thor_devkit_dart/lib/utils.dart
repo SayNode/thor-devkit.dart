@@ -97,3 +97,12 @@ Uint8List hmacSha512(Uint8List key, Uint8List input) {
   hMac.doFinal(out, 0);
   return out;
 }
+
+/// checks if input string is a hex String
+bool isHexString(String value) {
+
+  if (!RegExp('^0x[0-9A-Fa-f]*\$').hasMatch(value)) {
+    return false;
+  }
+  return true;
+}

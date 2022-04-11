@@ -63,6 +63,45 @@ class Transaction {
     }
   }
 
+      Transaction.fromBytes(
+        Uint8List chainTag,
+        Uint8List blockRef,
+        Uint8List expiration,
+        List<Uint8List> clauses,
+        Uint8List gasPriceCoef,
+        Uint8List gas,
+        Uint8List dependsOn,
+        Uint8List nonce,
+        List<Uint8List>? reserved
+    ){
+        this.chainTag.fromBytes(chainTag);
+        this.blockRef.fromBytes(blockRef);
+        this.expiration.fromBytes(expiration);
+        
+        List<Clause> _clauses = [];
+        for (Uint8List c in clauses) {
+            _clauses.add(Clause.decode(c));
+        }
+
+        this.clauses = _clauses;
+        
+        this.gasPriceCoef.fromBytes(gasPriceCoef);
+        this.gas.fromBytes(gas);
+        this.dependsOn.fromBytes(dependsOn);
+        this.nonce.fromBytes(nonce);
+        if (reserved != null){
+            if (reserved.isNotEmpty) {
+                this.reserved = Reserved.unpack(reserved);
+            } else {
+                this.reserved = Reserved.getNullReserved();
+            }
+        } else {
+            this.reserved = Reserved.getNullReserved();
+        }
+        
+    }
+
+
   /// Calculate the gas used by the data section.
   ///
   /// @param data Thre pure bytes of the data.
@@ -319,4 +358,13 @@ class Transaction {
     // RLP encode the packed body.
     return Rlp.encode(unsignedTxBody);
   }
+
+/*
+     ///Clone current tx into a standalone object.
+
+    Transaction clone() {
+        bool unsigned = signature == null;
+        return Transaction.decode(encode(), unsigned);
+    }
+    */
 }

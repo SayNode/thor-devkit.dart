@@ -14,27 +14,30 @@ void main() {
   String sig =
       "0x390870e4a99a6a80c3903e0bc13fdcaf15ae46d27b6365e3e07275990e3e74955ad43dba79682b9d0de3a47e96149539b07dde6b51c49a1c7eb6254036b913b000";
 
-
-      //TODO: Figure out why this doesnt work
+  //TODO: Figure out why this doesnt work
   test('verify correct', () {
+    Map<String, String> m = <String, String>{};
+    m['type'] = 'text';
+    m['content'] = 'fyi';
 
-            Map<String, String> m = <String, String>{};
-            m['type'] = 'text';
-            m['content'] = 'fyi';
+    Certificate c = Certificate(
+        "identification", m, "localhost", 1545035330, "0x" + bytesToHex(addr),
+        signature: sig);
 
-        Certificate c = Certificate(
-            "identification",
-            m,
-            "localhost",
-            1545035330,
-            "0x" + bytesToHex(addr),
-            signature: sig
+    c.verify();
+  });
+
+  test('verify wrong', () {
+    Map<String, String> m = <String, String>{};
+    m['type'] = 'text';
+    m['content'] = 'fyi';
+
+    Certificate c = Certificate(
+        "identification", m, "localhost", 1545035330, "0x" + bytesToHex(addr),
+        signature:
+            '1x390870e4a99a6a80c3903e0bc13fdcaf15ae46d27b6365e3e07275990e3e74955ad43dba79682b9d0de3a47e96149539b07dde6b51c49a1c7eb6254036b913b000' // wrong sig.
         );
 
-
-        c.verify(c);
-
-
-
+    expect(() => c.verify(), throwsException);
   });
 }

@@ -16,8 +16,8 @@ class Reserved {
     }
   }
 
-  Reserved.getNullReserved() {
-    Reserved(0, null);
+  static Reserved getNullReserved() {
+    return Reserved(0, null);
   }
 
   bool isNullReserved() {
@@ -42,7 +42,7 @@ class Reserved {
     int rightFirstNotEmptyIdx = -10;
     for (int i = mList.length - 1; i >= 0; i--) {
       final Uint8List x = mList[i];
-      if (x == null || x.isEmpty) {
+      if (x.isEmpty) {
         continue;
       } else {
         rightFirstNotEmptyIdx = i;
@@ -65,7 +65,7 @@ class Reserved {
   /// @param data
   /// @return Instance of Reserved or null.
 
-  Reserved? unpack(List<Uint8List>? data) {
+  static Reserved? unpack(List<Uint8List>? data) {
     List<Uint8List> r = [];
     if (data != null) {
       r = data;

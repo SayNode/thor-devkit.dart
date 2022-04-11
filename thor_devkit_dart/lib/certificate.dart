@@ -65,7 +65,7 @@ class Certificate {
     return json.encode(toMap());
   }
 
-  /** Check if signature is in good shape. */
+  /// Check if signature is in good shape.
   bool _isSignature(String input) {
     return RegExp(r'^0x[0-9a-f]+$', caseSensitive: false).hasMatch(input);
 
@@ -73,22 +73,20 @@ class Certificate {
     // from js regex  if (!/^0x[0-9a-f]+$/i.test(signature) || signature.length % 2 !== 0)
   }
 
-  /// Verify a cert (mainly on signature matching.)
-  /// @param c
-  /// @return
-  verify(Certificate c) {
-    if (c.signature == null) {
+  /// Verify a cert (mainly on signature matching.) throws epection if the certificate is invalid.
+  verify() {
+    if (signature == null) {
       throw Exception("Cert needs a signature.");
     }
-    if (c.signature!.length % 2 != 0) {
+    if (signature!.length % 2 != 0) {
       throw Exception("Signature shall be even length.");
     }
-    if (!_isSignature(c.signature!)) {
+    if (!_isSignature(signature!)) {
       throw Exception("Signature cannot pass the style check.");
     }
 
     // Compares if the signer matches with the signature.
-    Map temp = c.toMap();
+    Map temp = toMap();
     temp.remove("signature");
     Certificate newCert = Certificate.fromMap(temp);
     String j = newCert.toJsonString();
@@ -97,13 +95,13 @@ class Certificate {
 
     // Try to recover the public key.
     Uint8List pubKey = recover(signingHash,
-        ThorSignature.fromBytes(hexToBytes(c.signature!.substring(2))));
+        ThorSignature.fromBytes(hexToBytes(signature!.substring(2))));
 
 
     Uint8List addrBytes = publicKeyToAddressBytes(pubKey);
 
     String addr = ("0x" + bytesToHex(addrBytes)).toLowerCase();
-    if (addr.compareTo(c.signer.toLowerCase()) != 0) {
+    if (addr.compareTo(signer.toLowerCase()) != 0) {
       throw Exception("signature does not match with the signer.");
     }
   }

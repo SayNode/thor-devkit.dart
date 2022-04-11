@@ -22,7 +22,10 @@ class ThorSignature {
     BigInt s = bytesToInt(sigBytes.sublist(32, 64));
 
     signature = ECSignature(r, s);
-    v = sigBytes[64];
+
+    //FIXME: add 27 or not? Have to look into this
+    v = sigBytes[64] + 27;
+
 
 
   }
@@ -33,7 +36,9 @@ class ThorSignature {
     Uint8List serialize() {
       Uint8List r = intToBytes(signature.r);
       Uint8List s = intToBytes(signature.s);
-      Uint8List byteV = intToBytes(BigInt.from(v));
+
+      //FIXME: remove -27 or not? Have to look into this
+      Uint8List byteV = intToBytes(BigInt.from(v - 27));
       
       return Uint8List.fromList(r+s+byteV);
     }

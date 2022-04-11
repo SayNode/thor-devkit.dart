@@ -8,7 +8,7 @@ class NullableFixedBlobKind {
 
   NullableFixedBlobKind(this.byteLength);
 
-  void setValue(String? hexString) {
+  setValue(String? hexString) {
     if (hexString != null) {
       String realHex = remove0x(hexString);
 
@@ -35,6 +35,7 @@ class NullableFixedBlobKind {
       if (data.length != byteLength) {
         throw Exception("");
       }
+      this.data = data;
       return prepend0x(bytesToHex(data));
     }
   }
