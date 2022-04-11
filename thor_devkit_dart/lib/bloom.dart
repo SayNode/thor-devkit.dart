@@ -41,7 +41,7 @@ class Bloom {
   }
 
   bool _distribute(Uint8List element, Function cb) {
-    Uint8List hash = blake2b256(element); 
+    Uint8List hash = blake2b256([element]); 
 
     for (int i = 0; i < k; i++) {
       var d = ((hash[i * 2 + 1] + (hash[i * 2] << 8)) % BITS_SIZE);

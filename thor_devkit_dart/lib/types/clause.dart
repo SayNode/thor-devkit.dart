@@ -1,4 +1,3 @@
-
 import 'dart:typed_data';
 import 'package:rlp/rlp.dart';
 import 'package:thor_devkit_dart/types/blob_kind.dart';
@@ -30,13 +29,16 @@ class Clause {
 //TODO: change way decode is called
   Clause decode(Uint8List data) {
     RlpDecoder decoder = RlpDecoder();
-    
+
     var out = decoder.decode(data);
 
     List<int> t = List<int>.from(out[0]);
-    
-
 
     return Clause.fromUint8List(Uint8List.fromList(t), out[1], out[2]);
+  }
+
+  /// Pack a Clause into a List of Objects
+  List<Object> pack() {
+    return [to.toBytes(), value.toBytes(), data.toBytes()];
   }
 }

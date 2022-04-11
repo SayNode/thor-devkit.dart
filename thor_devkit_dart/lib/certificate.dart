@@ -92,7 +92,7 @@ class Certificate {
     temp.remove("signature");
     Certificate newCert = Certificate.fromMap(temp);
     String j = newCert.toJsonString();
-    Uint8List signingHash = blake2b256(Uint8List.fromList(utf8.encode(j)));
+    Uint8List signingHash = blake2b256([Uint8List.fromList(utf8.encode(j))]);
 
 
     // Try to recover the public key.

@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thor_devkit_dart/types/blob_kind.dart';
 import 'package:thor_devkit_dart/types/numeric_kind.dart';
 import 'package:thor_devkit_dart/utils.dart';
 
@@ -50,7 +49,7 @@ void main() {
   });
 
   test('decode', () {
-    NumericKind kind = new NumericKind(8);
+    NumericKind kind = NumericKind(8);
     BigInt b = kind.fromBytes(Uint8List.fromList([]));
     expect(b.compareTo(BigInt.from(0)), 0);
     BigInt b2 = kind.fromBytes(Uint8List.fromList([1, 2, 3]));

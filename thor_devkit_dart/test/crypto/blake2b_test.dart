@@ -9,7 +9,7 @@ void main() {
     String input = "hello world";
     Uint8List inputBytes = Uint8List.fromList(utf8.encode(input));
 
-    expect(bytesToHex(blake2b256(inputBytes)),
+    expect(bytesToHex(blake2b256([inputBytes])),
         "256c83b297114d201b30179f3f0ef0cace9783622da5974326b436178aeef610");
   });
 }

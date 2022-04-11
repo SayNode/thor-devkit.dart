@@ -5,7 +5,6 @@ import 'package:rlp/rlp.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:thor_devkit_dart/types/clause.dart';
 import 'package:thor_devkit_dart/types/rlp.dart';
-import 'package:thor_devkit_dart/utils.dart';
 
 void main() {
   //TODO: move to rlp test, write more proper rlp tests
@@ -45,10 +44,10 @@ void main() {
     expect(utf8.decode(decoder.decode(encoded2)),
         "Lorem ipsum dolor sit amet, consectetur adipisicing elit");
     var a = Uint8List.fromList(decoder2.decode(encoded3)[1]);
-    print(utf8.decode(a));
+    //print(utf8.decode(a));
 
-    print(decoder.decode(encoded3));
-    print(decoder2.decode(encoded4).length);
+    //print(decoder.decode(encoded3));
+    //print(decoder2.decode(encoded4).length);
   });
 
   test('encode decode', () {
@@ -63,14 +62,22 @@ void main() {
       Uint8List encoded = c.encode();
 
       // deserialize
-          RlpDecoder decoder = RlpDecoder();
-          print(c.data.toBytes());
-    
-    var out = decoder.decode(encoded);
-    print(out);
+      RlpDecoder decoder = RlpDecoder();
+      //print(c.data.toBytes());
 
+      var out = decoder.decode(encoded);
+      //print(out);
     }
+  });
 
+
+//TODO: Write test for pack methode
+  test('test pack methode', () {
+    Clause clause = Clause("0x7567d83b7b8d80addcb281a71d54fc7b3364ffed",
+        "10000", "0x000000606060");
+
+        
+        expect(false, true);
   });
 }
 
