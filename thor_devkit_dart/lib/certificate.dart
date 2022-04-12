@@ -17,7 +17,7 @@ class Certificate {
   String? signature;
 
   Certificate(
-      this.purpose, this.payload, this.domain,this.timestamp, String signer, 
+      this.purpose, this.payload, this.domain, this.timestamp, String signer,
       {String? signature}) {
     this.signer = signer.toLowerCase();
     if (signature != null) {
@@ -69,7 +69,6 @@ class Certificate {
   bool _isSignature(String input) {
     return RegExp(r'^0x[0-9a-f]+$', caseSensitive: false).hasMatch(input);
 
-
     // from js regex  if (!/^0x[0-9a-f]+$/i.test(signature) || signature.length % 2 !== 0)
   }
 
@@ -92,11 +91,9 @@ class Certificate {
     String j = newCert.toJsonString();
     Uint8List signingHash = blake2b256([Uint8List.fromList(utf8.encode(j))]);
 
-
     // Try to recover the public key.
     Uint8List pubKey = recover(signingHash,
         ThorSignature.fromBytes(hexToBytes(signature!.substring(2))));
-
 
     Uint8List addrBytes = publicKeyToAddressBytes(pubKey);
 
