@@ -4,7 +4,7 @@ import 'package:web3dart/credentials.dart';
 
 class KeyStore {
   ///Encrypt a private key with a password, generate a JSON string.
-  String encrypt(Uint8List priv, String password) {
+  static String encrypt(Uint8List priv, String password) {
     var ethKey = EthPrivateKey(priv);
     Random random = Random.secure();
 
@@ -14,7 +14,7 @@ class KeyStore {
   }
 
   ///Decrypt a JSON-style keystore back into a private key.
-  Uint8List decrypt(String jsonString, String password) {
+  static Uint8List decrypt(String jsonString, String password) {
     Wallet wallet = Wallet.fromJson(jsonString, password);
     var ethKey = wallet.privateKey;
 
