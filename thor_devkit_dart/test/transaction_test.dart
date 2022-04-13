@@ -6,7 +6,6 @@ import 'package:thor_devkit_dart/crypto/secp256k1.dart';
 import 'package:thor_devkit_dart/transaction.dart';
 import 'package:thor_devkit_dart/types/clause.dart';
 import 'package:thor_devkit_dart/types/reserved.dart';
-import 'package:thor_devkit_dart/types/rlp.dart';
 import 'package:thor_devkit_dart/utils.dart';
 
 void main() {
@@ -105,19 +104,6 @@ void main() {
   });
 
   test('empty clauses', () {
-
-
-    //f872c101c881aa81bb81cc81ddc120f856eadf756781d83b7b818d818081ad81dc81b2818181a71d5481fc7b336481ff81edc22710c6808080606060eadf756781d83b7b818d818081ad81dc81b2818181a71d5481fc7b336481ff81edc24e20c6808080606060c28180c25208c0c481bc614ec0
-    //print(bytesToHex(tx.encode()));
-        var decoded2 = RlpDecoder.decode(hexToBytes(
-        "f8540184aabbccdd20f840df947567d83b7b8d80addcb281a71d54fc7b3364ffed82271086000000606060df947567d83b7b8d80addcb281a71d54fc7b3364ffed824e208600000060606081808252088083bc614ec0"));
-    
-   print(decoded2);
-    print(RlpDecoder.decode(tx.encode()));
-    
-
-
-
 
     // empty clauses!
     tx.clauses = [];

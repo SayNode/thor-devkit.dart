@@ -42,6 +42,11 @@ class ThorFunction {
   List decodeReturn(String data) {
     return function.decodeReturnValues(data);
   }
+
+      @override
+    String toString() {
+        return function.toString();
+    }
 }
 
 ///Returns ContractFunctionType coresponding to [name]
@@ -75,6 +80,8 @@ StateMutability parseStateMutability(String name) {
   }
   throw FormatException('Type $name doesnt exist.');
 }
+
+
 
 
 

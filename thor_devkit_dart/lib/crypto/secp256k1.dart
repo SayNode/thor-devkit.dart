@@ -68,14 +68,12 @@ Uint8List derivePublicKeyFromBytes(Uint8List privateKey, bool compressed) {
 /// Signs the hashed data in [messageHash] using the given private key and returns a ThorSignature.
 ThorSignature sign(Uint8List messageHash, Uint8List privateKey) {
   final msgSig = web3dart.sign(messageHash, privateKey);
-  final ecSig = ECSignature(msgSig.r, msgSig.s);
 
-  return ThorSignature(ecSig, msgSig.v);
+  return ThorSignature(msgSig);
 }
 
 Uint8List recover(Uint8List messageHash, ThorSignature signature) {
   return web3dart.ecRecover(
       messageHash,
-      web3dart.MsgSignature(
-          signature.signature.r, signature.signature.s, signature.v));
+      signature.signature);
 }

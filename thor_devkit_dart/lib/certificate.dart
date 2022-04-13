@@ -83,6 +83,7 @@ class Certificate {
     if (!_isSignature(signature!)) {
       throw Exception("Signature cannot pass the style check.");
     }
+    
 
     // Compares if the signer matches with the signature.
     Map temp = toMap();
