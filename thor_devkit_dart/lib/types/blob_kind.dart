@@ -23,7 +23,7 @@ class BlobKind {
     this.data = data;
     return prepend0x(bytesToHex(data));
   }
-
+/// @return the hex string without "0x" prefix.
   @override
   String toString() {
     return bytesToHex(data!);

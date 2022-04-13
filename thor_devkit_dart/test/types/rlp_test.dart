@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:core';
+import 'dart:typed_data';
 import 'package:rlp/rlp.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:thor_devkit_dart/types/rlp.dart';
+import 'package:thor_devkit_dart/utils.dart';
 
 void main() {
   test('decode short string', () {
@@ -77,6 +79,25 @@ void main() {
       'dog',
       'cat',
       'dog'
+    ]);
+  });
+
+    test('lists in lists in lists', () {
+    var encoded = Rlp.encode([
+      [],
+      [['aaa']],
+      [
+        [],
+        [[], '10']
+      ]
+    ]);
+    expect(RlpDecoder.decode(encoded), [
+      [],
+      [[[97, 97, 97]]],
+      [
+        [],
+        [[], [49, 48]]
+      ]
     ]);
   });
 }

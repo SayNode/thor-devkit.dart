@@ -49,7 +49,7 @@ class Clause {
   }
 
   /// Pack a Clause into a List of Objects
-  List<Object> pack() {
+  List<Uint8List> pack() {
     return [to.toBytes(), value.toBytes(), data.toBytes()];
   }
 }

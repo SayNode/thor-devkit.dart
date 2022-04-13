@@ -10,7 +10,9 @@ import 'package:thor_devkit_dart/types/compact_fixed_blob_kind.dart';
 import 'package:thor_devkit_dart/types/nullable_fixed_blob_kind.dart';
 import 'package:thor_devkit_dart/types/numeric_kind.dart';
 import 'package:thor_devkit_dart/types/reserved.dart';
+import 'package:thor_devkit_dart/types/rlp.dart';
 import 'package:thor_devkit_dart/utils.dart';
+import 'package:web3dart/src/utils/rlp.dart' as rlp2;
 
 class Transaction {
   static const int delegatedMask = 1;
@@ -38,7 +40,7 @@ class Transaction {
   /// @param reserved See Reserved.java
 
   Transaction(
-      String chainTag,
+      int chainTag,
       String blockRef,
       String expiration,
       this.clauses,
@@ -48,7 +50,7 @@ class Transaction {
       String nonce,
       Reserved? reserved // can be null
       ) {
-    this.chainTag.setValueString(chainTag);
+    this.chainTag.setValueBigInt(BigInt.from(chainTag));
     this.blockRef.setValue(blockRef);
     this.expiration.setValueString(expiration);
 
@@ -63,44 +65,45 @@ class Transaction {
     }
   }
 
-      Transaction.fromBytes(
-        Uint8List chainTag,
-        Uint8List blockRef,
-        Uint8List expiration,
-        List<Uint8List> clauses,
-        Uint8List gasPriceCoef,
-        Uint8List gas,
-        Uint8List dependsOn,
-        Uint8List nonce,
-        List<Uint8List>? reserved
-    ){
-        this.chainTag.fromBytes(chainTag);
-        this.blockRef.fromBytes(blockRef);
-        this.expiration.fromBytes(expiration);
-        
-        List<Clause> _clauses = [];
-        for (Uint8List c in clauses) {
-            _clauses.add(Clause.decode(c));
-        }
+  Transaction.fromBytes(
+      Uint8List chainTag,
+      Uint8List blockRef,
+      Uint8List expiration,
+      List clauses,
+      Uint8List gasPriceCoef,
+      Uint8List gas,
+      Uint8List dependsOn,
+      Uint8List nonce,
+      List<Uint8List>? reserved) {
+    this.chainTag.fromBytes(chainTag);
+    this.blockRef.fromBytes(blockRef);
+    this.expiration.fromBytes(expiration);
 
-        this.clauses = _clauses;
-        
-        this.gasPriceCoef.fromBytes(gasPriceCoef);
-        this.gas.fromBytes(gas);
-        this.dependsOn.fromBytes(dependsOn);
-        this.nonce.fromBytes(nonce);
-        if (reserved != null){
-            if (reserved.isNotEmpty) {
-                this.reserved = Reserved.unpack(reserved);
-            } else {
-                this.reserved = Reserved.getNullReserved();
-            }
-        } else {
-            this.reserved = Reserved.getNullReserved();
-        }
-        
+    List<Clause> _clauses = [];
+    for (List c in clauses) {
+      var to = Uint8List.fromList(c[0].cast<int>());
+      var value = Uint8List.fromList(c[1].cast<int>());
+      var data = Uint8List.fromList(c[2].cast<int>());
+
+      _clauses.add(Clause.fromBytes(to, value, data));
     }
 
+    this.clauses = _clauses;
+
+    this.gasPriceCoef.fromBytes(gasPriceCoef);
+    this.gas.fromBytes(gas);
+    this.dependsOn.fromBytes(dependsOn);
+    this.nonce.fromBytes(nonce);
+    if (reserved != null) {
+      if (reserved.isNotEmpty) {
+        this.reserved = Reserved.unpack(reserved);
+      } else {
+        this.reserved = Reserved.getNullReserved();
+      }
+    } else {
+      this.reserved = Reserved.getNullReserved();
+    }
+  }
 
   /// Calculate the gas used by the data section.
   ///
@@ -202,7 +205,7 @@ class Transaction {
     // Get a unsigned Tx body as List
     List<dynamic> unsignedTxBody = packUnsignedTxBody();
     // RLP encode them to bytes.
-    Uint8List buff = Rlp.encode(unsignedTxBody);
+    Uint8List buff = Uint8List.fromList(rlp2.encode(unsignedTxBody));
     // Hash it.
     Uint8List h = blake2b256([buff]);
 
@@ -217,18 +220,18 @@ class Transaction {
   }
 
   ///Pack the objects bytes in a fixed order.
-  List<Object> packUnsignedTxBody() {
+  List packUnsignedTxBody() {
     // Prepare reserved.
 
     //FIXME: check if reserved can be null
     List<Uint8List> _reserved = reserved!.pack();
     // Prepare clauses.
-    List<Object> _clauses = [];
+    List<List<Uint8List>> _clauses = [];
     for (Clause c in clauses) {
       _clauses.add(c.pack());
     }
     // Prepare unsigned tx.
-    List<Object> unsignedBody = [
+    List unsignedBody = [
       chainTag.toBytes(),
       blockRef.toBytes(),
       expiration.toBytes(),
@@ -266,7 +269,12 @@ class Transaction {
   /// Notice: Address != public key.
   String? getOriginAsAddressString() {
     Uint8List? pubKey = getOriginAsPublicKey();
-    return pubKey == null ? null : publicKeyToAddressString(pubKey);
+
+    if (pubKey != null) {
+      return publicKeyToAddressString(pubKey);
+    }
+
+    return null;
   }
 
   /// Get "origin" of the tx by bytes Address style.
@@ -348,7 +356,7 @@ class Transaction {
   ///Encode a tx into bytes.
 
   Uint8List encode() {
-    List<Object> unsignedTxBody = packUnsignedTxBody();
+    List unsignedTxBody = packUnsignedTxBody();
 
     // Pack more: append the sig bytes at the end.
     if (signature != null) {
@@ -356,15 +364,49 @@ class Transaction {
     }
 
     // RLP encode the packed body.
-    return Rlp.encode(unsignedTxBody);
+
+    return Uint8List.fromList(rlp2.encode(unsignedTxBody));
   }
 
-/*
-     ///Clone current tx into a standalone object.
+  ///Decode a tx from Uint8List [data].
+  ///
+  static Transaction decode(Uint8List data, bool unsigned) {
+    var decoded = RlpDecoder.decode(data);
 
-    Transaction clone() {
-        bool unsigned = signature == null;
-        return Transaction.decode(encode(), unsigned);
+    var chainTag = Uint8List.fromList(decoded[0].cast<int>());
+    var blockRef = Uint8List.fromList(decoded[1].cast<int>());
+    var expiration = Uint8List.fromList(decoded[2].cast<int>());
+
+    List clauses = [];
+
+    for (var item in decoded[3]) {
+      clauses.add(item);
     }
-    */
+
+    var gasPriceCoef = Uint8List.fromList(decoded[4].cast<int>());
+    var gas = Uint8List.fromList(decoded[5].cast<int>());
+    var dependsOn = Uint8List.fromList(decoded[6].cast<int>());
+    var nonce = Uint8List.fromList(decoded[7].cast<int>());
+    List<Uint8List> reserved = [];
+    for (var item in decoded[8]) {
+      clauses.add(item);
+    }
+
+    var output = Transaction.fromBytes(chainTag, blockRef, expiration, clauses,
+        gasPriceCoef, gas, dependsOn, nonce, reserved);
+
+    if (!unsigned) {
+      Uint8List sig = Uint8List.fromList(decoded[9].cast<int>());
+      output.signature = sig;
+    }
+
+    return output;
+  }
+
+  ///Clone current tx into a standalone object.
+
+  Transaction clone() {
+    bool unsigned = signature == null;
+    return Transaction.decode(encode(), unsigned);
+  }
 }
