@@ -6,13 +6,13 @@ import 'package:thor_devkit_dart/utils.dart';
 void main() {
   test('generate mnemonic words', () {
     List<String> words;
-    words = Mnemonic.generate(128);
+    words = Mnemonic.generate();
     expect(12, words.length);
 
-    words = Mnemonic.generate(192);
+    words = Mnemonic.generate(entropyLength: 192);
     expect(18, words.length);
 
-    expect(() => Mnemonic.generate(1), throwsException);
+    expect(() => Mnemonic.generate(entropyLength: 1), throwsException);
   });
 
   test('validate pnemonic words', () {
@@ -41,7 +41,7 @@ void main() {
     ];
 
     expect(true, Mnemonic.validate(words));
-    expect(true, Mnemonic.validate(Mnemonic.generate(192)));
+    expect(true, Mnemonic.validate(Mnemonic.generate(entropyLength: 192)));
     expect(false, Mnemonic.validate(wrong));
   });
 

@@ -12,8 +12,9 @@ class Mnemonic {
   ///
   /// [entropyLength] How many bits the entropy shall be:
   ///                      128, 160, 192, 224, 256.
+  /// Default 128
 
-  static List<String> generate(int entropyLength) {
+  static List<String> generate({int entropyLength = 128}) {
     if (!L.contains(entropyLength)) {
       throw Exception("entropyLength is wrong.");
     }

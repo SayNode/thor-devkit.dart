@@ -65,7 +65,7 @@ class Certificate {
 
   /// Check if signature is in good shape.
   bool _isSignature(String input) {
-    return RegExp(r'^0x[0-9a-f]+$', caseSensitive: false).hasMatch(input);
+   return RegExp(r'^0x[0-9a-f]+$', caseSensitive: false).hasMatch(input);
 
     // from js regex  if (!/^0x[0-9a-f]+$/i.test(signature) || signature.length % 2 !== 0)
   }
@@ -88,8 +88,14 @@ class Certificate {
     //Certificate newCert = Certificate.fromMap(temp);
     String j = json.encode(temp);
 
-    //FIXME:somehow the signing hash is not the sme as in thor-devkit.java
-    Uint8List signingHash = blake2b256([Uint8List.fromList(utf8.encode(j))]);
+
+    //FIXME:this line doesnt work as intended. utf8 encoding gives diffrent result compared to java and i have no idea why
+     var encoded = Uint8List.fromList(utf8.encode(j));
+
+
+
+    Uint8List signingHash = blake2b256([encoded]);
+
 
 
     // Try to recover the public key.

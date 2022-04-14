@@ -10,15 +10,15 @@ import 'package:web3dart/crypto.dart' show compressPublicKey;
 const accountDerivationPath = "m/44'/818'/0'/0";
 
 // Hardened bit = the mark ' on the number.
-const int HARDENED_BIT = 0x80000000;
+const int hardenedBit = 0x80000000;
 // This is a constant for VET path.
 // it simply adds 44', 818', 0', 0 to the path.
 // m / 44' / 818' / 0' / 0
 
-const List<int> VET_PATH = [
-  44 + HARDENED_BIT,
-  818 + HARDENED_BIT,
-  0 + HARDENED_BIT,
+const List<int> vetPath = [
+  44 + hardenedBit,
+  818 + hardenedBit,
+  0 + hardenedBit,
   0
 ];
 

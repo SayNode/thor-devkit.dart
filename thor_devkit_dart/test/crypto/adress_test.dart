@@ -42,12 +42,5 @@ void main() {
     }
     expect('0xf7172f3dC885b68931C7259Aea44c83B31c447E8',
         Adress.toChecksumAddress("0xf7172f3dc885b68931c7259aea44c83b31c447e8"));
-        print(BigInt.from(0xff));
   });
-
-/*
-      test('empty', () {
-      
-    });
-    */
 }

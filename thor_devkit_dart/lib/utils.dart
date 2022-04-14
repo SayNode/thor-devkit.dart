@@ -72,12 +72,12 @@ BigInt bytesToInt(Uint8List bytes) {
 }
 
 Uint8List asciiToBytes(String input) {
-  AsciiCodec a = AsciiCodec();
+  AsciiCodec a = const AsciiCodec();
   return a.encode(input);
 }
 
 String bytesToAscii(Uint8List input) {
-  AsciiCodec a = AsciiCodec();
+  AsciiCodec a = const AsciiCodec();
   return a.decode(input);
 }
 

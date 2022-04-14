@@ -13,7 +13,7 @@ void main() {
   test('serialize', () {
     Uint8List priv = hexToBytes(
         "7582be841ca040aa940fff6c05773129e135623e41acce3e0b8ba520dc1ae26a");
-    final messageHash = keccak256(asciiToBytes('hello world'));
+    final messageHash = keccak256([asciiToBytes('hello world')]);
     Uint8List sigBytes = sign(messageHash, priv).serialize();
     expect(
         sigBytes,

@@ -6,7 +6,7 @@ import 'package:web3dart/crypto.dart';
 //Decoding directly taken from https://github.com/ethereumdart/ethereum_util/blob/master/lib/src/rlp.dart
 class RlpDecoder {
   static dynamic decode(Uint8List input, [bool stream = false]) {
-    if (input == null || input.isEmpty) {
+    if (input.isEmpty) {
       return <Uint8List>[];
     }
 

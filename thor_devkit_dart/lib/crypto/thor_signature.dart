@@ -1,7 +1,5 @@
 import 'dart:core';
 import 'dart:typed_data';
-
-import 'package:pointycastle/pointycastle.dart';
 import 'package:thor_devkit_dart/utils.dart';
 import 'package:web3dart/crypto.dart' as w3d;
 

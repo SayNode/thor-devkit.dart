@@ -3,15 +3,15 @@ import 'dart:typed_data';
 import 'package:thor_devkit_dart/utils.dart';
 
 class NumericKind {
-  static const int MAX = 256; // MAX bit length is 256-bits.
-  static final BigInt ZERO = BigInt.from(0); // Smallest is 0.
+  static const int max = 256; // max bit length is 256-bits.
+  static final BigInt zero = BigInt.from(0); // Smallest is 0.
 
   int byteLength = 0;
   BigInt? big;
 
   /// [input] How mny bytes the number should occupy max.
   NumericKind(int input) {
-    if (input <= 0 || input * 8 > MAX) {
+    if (input <= 0 || input * 8 > max) {
       throw Exception("Has to be 32 or less.");
     }
     byteLength = input;
@@ -25,12 +25,12 @@ class NumericKind {
 
 
     // Less than 0.
-    if (ZERO.compareTo(big) > 0) {
+    if (zero.compareTo(big) > 0) {
       throw Exception("Has to be be bigger than 0");
     }
 
     // Breach the ceiling.
-    if (big.bitLength > MAX) {
+    if (big.bitLength > max) {
       throw Exception("Hs to be 256-bit/32-byte or less.");
     }
 
@@ -66,17 +66,17 @@ class NumericKind {
 
     Uint8List m = intToBytes(big!);
 
-    int firstNonZeroIndex = -1;
+    int firstNonzeroIndex = -1;
     for (int i = 0; i < m.length; i++) {
       if (m[i] != 0) {
-        firstNonZeroIndex = i;
+        firstNonzeroIndex = i;
         break;
       }
     }
 
     Uint8List? n;
-    if (firstNonZeroIndex != -1) {
-      n = Uint8List.sublistView(m, firstNonZeroIndex, m.length);
+    if (firstNonzeroIndex != -1) {
+      n = Uint8List.sublistView(m, firstNonzeroIndex, m.length);
     }
 
     if (n != null) {

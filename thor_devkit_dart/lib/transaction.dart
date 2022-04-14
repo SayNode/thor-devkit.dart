@@ -1,6 +1,4 @@
 import 'dart:typed_data';
-
-import 'package:rlp/rlp.dart';
 import 'package:thor_devkit_dart/crypto/address.dart';
 import 'package:thor_devkit_dart/crypto/blake2b.dart';
 import 'package:thor_devkit_dart/crypto/secp256k1.dart';
