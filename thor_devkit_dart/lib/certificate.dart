@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'dart:typed_data';
-
 import 'package:thor_devkit_dart/crypto/address.dart';
 import 'package:thor_devkit_dart/crypto/blake2b.dart';
 import 'package:thor_devkit_dart/crypto/secp256k1.dart';
@@ -50,11 +48,11 @@ class Certificate {
       sig = signature!;
     }
     final map = <String, Object>{
-      'purpose': purpose,
-      'payload': payload,
       'domain': domain,
-      'timestamp': timestamp,
+      'payload': payload,
+      'purpose': purpose,
       'signer': signer,
+      'timestamp': timestamp,
       'signature': sig
     };
     return map;
@@ -83,22 +81,27 @@ class Certificate {
     if (!_isSignature(signature!)) {
       throw Exception("Signature cannot pass the style check.");
     }
-    
 
     // Compares if the signer matches with the signature.
     Map temp = toMap();
     temp.remove("signature");
-    Certificate newCert = Certificate.fromMap(temp);
-    String j = newCert.toJsonString();
+    //Certificate newCert = Certificate.fromMap(temp);
+    String j = json.encode(temp);
+
+    //FIXME:somehow the signing hash is not the sme as in thor-devkit.java
     Uint8List signingHash = blake2b256([Uint8List.fromList(utf8.encode(j))]);
+
 
     // Try to recover the public key.
     Uint8List pubKey = recover(signingHash,
         ThorSignature.fromBytes(hexToBytes(signature!.substring(2))));
 
+
+
     Uint8List addrBytes = publicKeyToAddressBytes(pubKey);
 
     String addr = ("0x" + bytesToHex(addrBytes)).toLowerCase();
+
     if (addr.compareTo(signer.toLowerCase()) != 0) {
       throw Exception("signature does not match with the signer.");
     }

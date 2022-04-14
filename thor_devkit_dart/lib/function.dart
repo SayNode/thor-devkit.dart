@@ -12,19 +12,20 @@ class ThorFunction {
     //parse inputs/parameters of function into FunctionParameters
     List<FunctionParameter> inputs = [];
     for (var input in tempF['inputs']) {
-      FunctionParameter(input['name'], parseAbiType(input['type']));
+      inputs.add(FunctionParameter(input['name'], parseAbiType(input['type'])));
+      
     }
-
+ 
     //parse outputs of function
     List<FunctionParameter> outputs = [];
     for (var output in tempF['inputs']) {
-      FunctionParameter(output['name'], parseAbiType(output['type']));
+      outputs.add(FunctionParameter(output['name'], parseAbiType(output['type'])));
     }
 
     function = ContractFunction(tempF['name'], inputs,
         outputs: outputs,
         type: parseFunctionType(tempF['type']),
-        mutability: parseStateMutability(tempF['mutability']));
+        mutability: parseStateMutability(tempF['stateMutability']));
   }
 
   ///Get selector as Uint8List
@@ -36,6 +37,8 @@ class ThorFunction {
   Uint8List encode(List args) {
     return function.encodeCall(args);
   }
+
+
 
 
   ///Decode the return value of the function
@@ -65,7 +68,7 @@ ContractFunctionType parseFunctionType(String name) {
 
 ///Returns StateMutability coresponding to [name]
 StateMutability parseStateMutability(String name) {
-  if (name == 'nonPayable') {
+  if (name == 'nonpayable') {
     return StateMutability.nonPayable;
   }
   if (name == 'payable') {
@@ -80,31 +83,3 @@ StateMutability parseStateMutability(String name) {
   }
   throw FormatException('Type $name doesnt exist.');
 }
-
-
-
-
-
-/*
-      {
-        "constant": true,
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "name": "balanceOf",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      */

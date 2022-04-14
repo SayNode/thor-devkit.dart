@@ -23,7 +23,11 @@ class ThorEvent {
     return event.signature;
   }
 
-  List decodeResult(List<String> topics, String data) {
+  ///Returns topics and data
+  List decodeResults(List<String> topics, String data) {
     return event.decodeResults(topics, data);
   }
+
+  
 }
+

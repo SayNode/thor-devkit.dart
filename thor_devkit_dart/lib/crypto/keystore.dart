@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:web3dart/credentials.dart';
 
-class KeyStore {
+class Keystore {
   ///Encrypt a private key with a password, generate a JSON string.
   static String encrypt(Uint8List priv, String password) {
     var ethKey = EthPrivateKey(priv);
