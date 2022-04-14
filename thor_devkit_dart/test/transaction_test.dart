@@ -52,7 +52,7 @@ void main() {
 
     Uint8List publicKeyUncompressed =
         derivePublicKeyFromBytes(privateKey, false);
-    Uint8List addressBytes = publicKeyToAddressBytes(publicKeyUncompressed);
+    Uint8List addressBytes = Adress.publicKeyToAddressBytes(publicKeyUncompressed);
 
     expect(
         tx.signature,
@@ -132,13 +132,13 @@ void main() {
     Uint8List priv_1 = hexToBytes(
         "58e444d4fe08b0f4d9d86ec42f26cf15072af3ddc29a78e33b0ceaaa292bcf6b");
     Uint8List addr_1 =
-        publicKeyToAddressBytes(derivePublicKeyFromBytes(priv_1, false));
+        Adress.publicKeyToAddressBytes(derivePublicKeyFromBytes(priv_1, false));
 
     // Gas Payer
     Uint8List priv_2 = hexToBytes(
         "0bfd6a863f347f4ef2cf2d09c3db7b343d84bb3e6fc8c201afee62de6381dc65");
     Uint8List addr_2 =
-        publicKeyToAddressBytes(derivePublicKeyFromBytes(priv_2, false));
+        Adress.publicKeyToAddressBytes(derivePublicKeyFromBytes(priv_2, false));
 
     // Sender sign the message himself.
     Uint8List h = tx.getSigningHash(null);

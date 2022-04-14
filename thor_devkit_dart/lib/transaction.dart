@@ -210,7 +210,7 @@ class Transaction {
     Uint8List h = blake2b256([buff]);
 
     if (delegateFor != null) {
-      if (!isAddress(delegateFor)) {
+      if (!Adress.isAddress(delegateFor)) {
         throw Exception("delegateFor should be address type.");
       }
       return blake2b256([h, hexToBytes(delegateFor.substring(2))]);
@@ -271,7 +271,7 @@ class Transaction {
     Uint8List? pubKey = getOriginAsPublicKey();
 
     if (pubKey != null) {
-      return publicKeyToAddressString(pubKey);
+      return Adress.publicKeyToAddressString(pubKey);
     }
 
     return null;
@@ -282,7 +282,7 @@ class Transaction {
 
   Uint8List? getOriginAsAddressBytes() {
     Uint8List? pubKey = getOriginAsPublicKey();
-    return pubKey == null ? null : publicKeyToAddressBytes(pubKey);
+    return pubKey == null ? null : Adress.publicKeyToAddressBytes(pubKey);
   }
 
   ///Get the delegator public key as bytes.
@@ -316,14 +316,14 @@ class Transaction {
 
   Uint8List? getDeleagtorAsAddressBytes() {
     Uint8List? pubKey = getDelegator();
-    return pubKey == null ? null : publicKeyToAddressBytes(pubKey);
+    return pubKey == null ? null : Adress.publicKeyToAddressBytes(pubKey);
   }
 
   /// Get the delegator as Address type, in string.
   /// @return or null.
   String? getDelegatorAsAddressString() {
     Uint8List? pubKey = getDelegator();
-    return pubKey == null ? null : publicKeyToAddressString(pubKey);
+    return pubKey == null ? null : Adress.publicKeyToAddressString(pubKey);
   }
 
   ///Calculate Tx id (32 bytes).
@@ -338,7 +338,7 @@ class Transaction {
       ThorSignature sig = ThorSignature.fromBytes(
           Uint8List.fromList(signature!.sublist(0, 65)));
       Uint8List pubKey = recover(h, sig);
-      Uint8List addressBytes = publicKeyToAddressBytes(pubKey);
+      Uint8List addressBytes = Adress.publicKeyToAddressBytes(pubKey);
       return blake2b256([h, addressBytes]);
     } catch (e) {
       return null;

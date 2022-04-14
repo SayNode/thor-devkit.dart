@@ -27,7 +27,7 @@ class HDNode {
   Uint8List? get privateKey => node.privateKey;
   Uint8List get publicKey => node.publicKey;
   Uint8List get chainCode => node.chainCode;
-  Uint8List get address => publicKeyToAddressBytes(publicKey);
+  Uint8List get address => Adress.publicKeyToAddressBytes(publicKey);
 
   HDNode(this.node);
 

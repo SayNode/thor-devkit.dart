@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:thor_devkit_dart/function.dart';
@@ -34,101 +33,7 @@ void main() {
       "    \"type\": \"function\"" +
       "}";
 
-  const String f2 = "{" +
-      "    \"inputs\": []," +
-      "    \"name\": \"nodes\"," +
-      "    \"payable\": false," +
-      "    \"outputs\": [" +
-      "        {" +
-      "            \"components\": [" +
-      "                {" +
-      "                    \"internalType\": \"address\"," +
-      "                    \"name\": \"master\"," +
-      "                    \"type\": \"address\"" +
-      "                }," +
-      "                {" +
-      "                    \"internalType\": \"address\"," +
-      "                    \"name\": \"endorsor\"," +
-      "                    \"type\": \"address\"" +
-      "                }," +
-      "                {" +
-      "                    \"internalType\": \"bytes32\"," +
-      "                    \"name\": \"identity\"," +
-      "                    \"type\": \"bytes32\"" +
-      "                }," +
-      "                {" +
-      "                    \"internalType\": \"bool\"," +
-      "                    \"name\": \"active\"," +
-      "                    \"type\": \"bool\"" +
-      "                }" +
-      "            ]," +
-      "            \"internalType\": \"struct AuthorityUtils.Candidate[]\"," +
-      "            \"name\": \"list\"," +
-      "            \"type\": \"tuple[]\"" +
-      "        }" +
-      "    ]," +
-      "    \"stateMutability\": \"nonpayable\"," +
-      "    \"type\": \"function\"" +
-      "}";
-
-  // Solidity
-  // function getStr() public pure returns (string memory) {
-  //    return "Hello World!";
-  // }
-  const String f3 = "{" +
-      "    \"inputs\": []," +
-      "    \"name\": \"getStr\"," +
-      "    \"outputs\": [" +
-      "        {" +
-      "            \"internalType\": \"string\"," +
-      "            \"name\": \"\"," +
-      "            \"type\": \"string\"" +
-      "        }" +
-      "    ]," +
-      "    \"stateMutability\": \"pure\"," +
-      "    \"type\": \"function\"" +
-      "}";
-
-  // Solidity
-  // function getBool() public pure returns (bool) {
-  //     return true;
-  // }
-  const String f4 = "{" +
-      "    \"inputs\": []," +
-      "    \"name\": \"getBool\"," +
-      "    \"outputs\": [" +
-      "        {" +
-      "            \"internalType\": \"bool\"," +
-      "            \"name\": \"\"," +
-      "            \"type\": \"bool\"" +
-      "        }" +
-      "    ]," +
-      "    \"stateMutability\": \"pure\"," +
-      "    \"type\": \"function\"" +
-      "}";
-
-  // Solidity
-  // function getBigNumbers() public pure returns (uint256 a, int256 b) {
-  //     return (123456, -123456);
-  // }
-  const String f5 = "{" +
-      "    \"inputs\": []," +
-      "    \"name\": \"getBigNumbers\"," +
-      "    \"outputs\": [" +
-      "        {" +
-      "            \"internalType\": \"uint256\"," +
-      "            \"name\": \"a\"," +
-      "            \"type\": \"uint256\"" +
-      "        }," +
-      "        {" +
-      "            \"internalType\": \"int256\"," +
-      "            \"name\": \"b\"," +
-      "            \"type\": \"int256\"" +
-      "        }" +
-      "    ]," +
-      "    \"stateMutability\": \"pure\"," +
-      "    \"type\": \"function\"" +
-      "}";
+  
 
   test('encode', () {
     ThorFunction f = ThorFunction(f1);
@@ -153,7 +58,8 @@ void main() {
 
 
         List result = f2.decodeReturn(data);
-        print(result);
+
+        
         expect(result.length, 2);
         expect(result[0], hexToInt("abc0000000000000000000000000000000000001"));
         expect(result[1], utf8.decode(hexToBytes("0x666f6f")));

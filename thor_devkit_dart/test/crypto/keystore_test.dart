@@ -7,15 +7,15 @@ import 'package:thor_devkit_dart/utils.dart';
 void main() {
 
   test('encrypt() test', () {
-        String private_key_hex = "1599403f7b6c17bb09f16e7f8ebe697af3626db5b41e0f9427a49151c6216920";
+        String privateKeyHex = "1599403f7b6c17bb09f16e7f8ebe697af3626db5b41e0f9427a49151c6216920";
         String password = "123456";
 
         // Convert private key to keystore.
-        String ks = Keystore.encrypt(hexToBytes(private_key_hex), password);
+        String ks = Keystore.encrypt(hexToBytes(privateKeyHex), password);
         // Convert keystore to private key.
         Uint8List priv = Keystore.decrypt(ks, password);
         // Private key shall remain the same.
-        expect(private_key_hex, bytesToHex(priv));
+        expect(privateKeyHex, bytesToHex(priv));
     });
 
   test('decrypt() test', () {
