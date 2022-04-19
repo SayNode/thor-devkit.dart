@@ -104,7 +104,7 @@ class Certificate {
 
 
 
-    Uint8List addrBytes = Adress.publicKeyToAddressBytes(pubKey);
+    Uint8List addrBytes = Address.publicKeyToAddressBytes(pubKey);
 
     String addr = ("0x" + bytesToHex(addrBytes)).toLowerCase();
 

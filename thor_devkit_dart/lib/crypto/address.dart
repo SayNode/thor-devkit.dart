@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:pointycastle/digests/keccak.dart';
 import 'package:thor_devkit_dart/utils.dart';
 
-class Adress {
+class Address {
 
   ///Check if the public key is 65 bytes, and starts with 4.
   static bool isUncompressedPublicKey(Uint8List input) {
