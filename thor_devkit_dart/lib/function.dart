@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:thor_devkit_dart/crypto/address.dart';
 import 'package:web3dart/contracts.dart';
+import 'package:web3dart/credentials.dart';
 
 class ThorFunction {
   late ContractFunction function;
@@ -13,13 +15,13 @@ class ThorFunction {
     List<FunctionParameter> inputs = [];
     for (var input in tempF['inputs']) {
       inputs.add(FunctionParameter(input['name'], parseAbiType(input['type'])));
-      
     }
- 
+
     //parse outputs of function
     List<FunctionParameter> outputs = [];
     for (var output in tempF['inputs']) {
-      outputs.add(FunctionParameter(output['name'], parseAbiType(output['type'])));
+      outputs
+          .add(FunctionParameter(output['name'], parseAbiType(output['type'])));
     }
 
     function = ContractFunction(tempF['name'], inputs,
@@ -35,21 +37,29 @@ class ThorFunction {
 
   ///Encode the parameters to Uint8List
   Uint8List encode(List args) {
-    return function.encodeCall(args);
+    List out = [];
+    for (var i = 0; i < args.length; i++) {
+      if (Address.isAddress(args[i])) {
+        out.add(EthereumAddress.fromHex(args[i]));
+      } else {
+        out.add(args[i]);
+      }
+    }
+
+    //EthereumAddress a = EthereumAddress.fromHex(args[0]);
+    //return function.encodeCall([a]);
+    return function.encodeCall(out);
   }
-
-
-
 
   ///Decode the return value of the function
   List decodeReturn(String data) {
     return function.decodeReturnValues(data);
   }
 
-      @override
-    String toString() {
-        return function.toString();
-    }
+  @override
+  String toString() {
+    return function.toString();
+  }
 }
 
 ///Returns ContractFunctionType coresponding to [name]

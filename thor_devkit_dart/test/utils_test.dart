@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:thor_devkit_dart/utils.dart';
+import 'package:web3dart/credentials.dart';
 
 void main() {
   test('ascii to and from bytes', () {
@@ -15,5 +16,7 @@ void main() {
     Uint8List a = getRandomBytes(128);
     expect(128, a.length);
   });
-  test('serialize', () {});
+  test('serialize', () {
+
+  });
 }
