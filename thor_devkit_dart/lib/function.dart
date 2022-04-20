@@ -39,8 +39,12 @@ class ThorFunction {
   Uint8List encode(List args) {
     List out = [];
     for (var i = 0; i < args.length; i++) {
-      if (Address.isAddress(args[i])) {
-        out.add(EthereumAddress.fromHex(args[i]));
+      if (args[i] is String) {
+        if (Address.isAddress(args[i])) {
+          out.add(EthereumAddress.fromHex(args[i]));
+        } else {
+          out.add(args[i]);
+        }
       } else {
         out.add(args[i]);
       }
