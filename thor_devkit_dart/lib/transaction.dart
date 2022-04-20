@@ -111,17 +111,17 @@ class Transaction {
       clauses.add(Clause(clause['to'], clause['value'], clause['data']));
     }
 
-    var reserved = Reserved(1, [hexToBytes(txMap['delegtor'])]);
+    var reserved = Reserved(1, []);
 
     var tx = Transaction(
         txMap['chainTag'],
         txMap['blockRef'],
-        txMap['expiration'],
+        txMap['expiration'].toString(),
         clauses,
-        txMap['gasPriceCoef'],
-        txMap['gas'],
+        txMap['gasPriceCoef'].toString(),
+        txMap['gas'].toString(),
         txMap['dependsOn'],
-        txMap['nonce'],
+        txMap['nonce'].toString(),
         reserved);
     return tx;
   }

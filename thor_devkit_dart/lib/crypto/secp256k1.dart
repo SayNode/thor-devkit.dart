@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 import 'package:pointycastle/export.dart';
 import 'package:thor_devkit_dart/crypto/thor_signature.dart';
@@ -38,15 +39,8 @@ bool isValidMessageHash(Uint8List messageHash) {
 
 /// Generates a new private key
 BigInt generatePrivateKey() {
-  final generator = ECKeyGenerator();
-  final random = FortunaRandom();
-  final keyParams = ECKeyGeneratorParameters(ECCurve_secp256k1());
-
-  generator.init(ParametersWithRandom(keyParams, random));
-
-  final key = generator.generateKeyPair();
-  final privateKey = key.privateKey as ECPrivateKey;
-  return privateKey.d!;
+  final random = Random();
+  return web3dart.generateNewPrivateKey(random);
 }
 
 /// Generates a public key for the given private key.

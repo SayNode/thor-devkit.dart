@@ -49,18 +49,18 @@ void main() {
     expect(sig.signature.v, 27);
   });
 
-
-
-
+  test('generate privte key', () {
+    var priv = generatePrivateKey();
+    expect(isValidPrivateKey(intToBytes(priv)), true);
+  });
   test('signatures recover the public key of the signer', () {
-
-    final privateKey = hexToBytes('a392604efc2fad9c0b3da43b5f698a2e3f270f170d859912be0d54742275c5f6');
-    final messageHash = keccak256([Uint8List.fromList(utf8.encode('this is a test!'))]);
+    final privateKey = hexToBytes(
+        'a392604efc2fad9c0b3da43b5f698a2e3f270f170d859912be0d54742275c5f6');
+    final messageHash =
+        keccak256([Uint8List.fromList(utf8.encode('this is a test!'))]);
     final publicKey = derivePublicKeyFromBytes(privateKey, false);
     final signature = sign(messageHash, privateKey);
     final recoveredPublicKey = recover(messageHash, signature);
     expect(bytesToHex(publicKey), bytesToHex(recoveredPublicKey));
   });
-
-  
 }
