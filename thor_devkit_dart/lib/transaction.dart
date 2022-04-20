@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:thor_devkit_dart/crypto/address.dart';
 import 'package:thor_devkit_dart/crypto/blake2b.dart';
@@ -101,6 +102,28 @@ class Transaction {
     } else {
       this.reserved = Reserved.getNullReserved();
     }
+  }
+
+  static fromJsonString(String txBody) {
+    Map txMap = json.decode(txBody);
+    List<Clause> clauses = [];
+    for (var clause in txMap['clauses']) {
+      clauses.add(Clause(clause['to'], clause['value'], clause['data']));
+    }
+
+    var reserved = Reserved(1, [hexToBytes(txMap['delegtor'])]);
+
+    var tx = Transaction(
+        txMap['chainTag'],
+        txMap['blockRef'],
+        txMap['expiration'],
+        clauses,
+        txMap['gasPriceCoef'],
+        txMap['gas'],
+        txMap['dependsOn'],
+        txMap['nonce'],
+        reserved);
+    return tx;
   }
 
   /// Calculate the gas used by the data section.
