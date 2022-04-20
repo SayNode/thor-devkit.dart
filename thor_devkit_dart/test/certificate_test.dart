@@ -26,19 +26,6 @@ void main() {
     c.verify();
   });
 
-    test('verify correct dart signed', () {
-    Map<String, String> m = <String, String>{};
-    m['type'] = 'text';
-    m['content'] = 'fyi';
-
-    Certificate c = Certificate(
-        "identification", m, "localhost", 1545035330, addr);
-
-        c.signature = sig;
- 
-      c.verify();
-  });
-
   test('not a valid sig', () {
     Map<String, String> m = <String, String>{};
     m['type'] = 'text';
