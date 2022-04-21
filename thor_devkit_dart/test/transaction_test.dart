@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:thor_devkit_dart/crypto/address.dart';
@@ -33,14 +34,11 @@ void main() {
         tx.encode(),
         hexToBytes(
             "f8540184aabbccdd20f840df947567d83b7b8d80addcb281a71d54fc7b3364ffed82271086000000606060df947567d83b7b8d80addcb281a71d54fc7b3364ffed824e208600000060606081808252088083bc614ec0"));
-  
-  
 
-      expect(
+    expect(
         tx.getSigningHash(null),
         hexToBytes(
             "2a1c25ce0d66f45276a5f308b99bf410e2fc7d5b6ea37a49f2ab9f1da9446478"));
-  
   });
 
   test('signed transaction', () {
@@ -52,7 +50,8 @@ void main() {
 
     Uint8List publicKeyUncompressed =
         derivePublicKeyFromBytes(privateKey, false);
-    Uint8List addressBytes = Address.publicKeyToAddressBytes(publicKeyUncompressed);
+    Uint8List addressBytes =
+        Address.publicKeyToAddressBytes(publicKeyUncompressed);
 
     expect(
         tx.signature,
@@ -104,7 +103,6 @@ void main() {
   });
 
   test('empty clauses', () {
-
     // empty clauses!
     tx.clauses = [];
 
@@ -131,14 +129,14 @@ void main() {
     // Sender
     Uint8List priv_1 = hexToBytes(
         "58e444d4fe08b0f4d9d86ec42f26cf15072af3ddc29a78e33b0ceaaa292bcf6b");
-    Uint8List addr_1 =
-        Address.publicKeyToAddressBytes(derivePublicKeyFromBytes(priv_1, false));
+    Uint8List addr_1 = Address.publicKeyToAddressBytes(
+        derivePublicKeyFromBytes(priv_1, false));
 
     // Gas Payer
     Uint8List priv_2 = hexToBytes(
         "0bfd6a863f347f4ef2cf2d09c3db7b343d84bb3e6fc8c201afee62de6381dc65");
-    Uint8List addr_2 =
-        Address.publicKeyToAddressBytes(derivePublicKeyFromBytes(priv_2, false));
+    Uint8List addr_2 = Address.publicKeyToAddressBytes(
+        derivePublicKeyFromBytes(priv_2, false));
 
     // Sender sign the message himself.
     Uint8List h = tx.getSigningHash(null);
@@ -158,5 +156,37 @@ void main() {
     expect(tx.getOriginAsAddressBytes(), addr_1);
 
     expect(tx.getDeleagtorAsAddressBytes(), addr_2);
+  });
+
+  test('fromJsonString', () {
+    Map txMap = {
+      "chainTag": 39,
+      "blockRef": '0x00634b0a00639801',
+      "expiration": 720,
+      "clauses": [
+        {
+          "to": '0x0000000000000000000000000000000000000000',
+          "value": 1000000000000000000,
+          "data": '0x'
+        }
+      ],
+      "gasPriceCoef": 0,
+      "gas": 21000,
+      "dependsOn": null,
+      "nonce": 12345678
+    };
+
+    List<Clause> clauses = [
+      Clause("0x0000000000000000000000000000000000000000",
+          "1000000000000000000", "0x"),
+    ];
+    Transaction txMatcher = Transaction(39, "0x00634b0a00639801", "72000000",
+        clauses, "0", "21000", null, "12345678", null);
+
+    Transaction txActual = Transaction.fromJsonString(json.encode(txMap));
+
+    expect(txActual.clauses.length, txMatcher.clauses.length);
+
+
   });
 }

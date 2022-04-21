@@ -108,7 +108,13 @@ class Transaction {
     Map txMap = json.decode(txBody);
     List<Clause> clauses = [];
     for (var clause in txMap['clauses']) {
-      clauses.add(Clause(clause['to'], clause['value'], clause['data']));
+      if (clause is String) {
+        var c = json.decode(clause);
+        clauses.add(Clause(c['to'], c['value'].toString(), c['data']));
+      } else {
+        clauses.add(
+            Clause(clause['to'], clause['value'].toString(), clause['data']));
+      }
     }
 
     var reserved = Reserved(1, []);
@@ -124,6 +130,21 @@ class Transaction {
         txMap['nonce'].toString(),
         reserved);
     return tx;
+  }
+
+  String toJsonString() {
+    Map txMap = {
+      "chainTag": chainTag,
+      "blockRef": blockRef,
+      "expiration": expiration,
+      "clauses": clauses,
+      "gasPriceCoef": gasPriceCoef,
+      "gas": gas,
+      "dependsOn": dependsOn,
+      "nonce": nonce
+    };
+
+    return json.encode(txMap);
   }
 
   /// Calculate the gas used by the data section.

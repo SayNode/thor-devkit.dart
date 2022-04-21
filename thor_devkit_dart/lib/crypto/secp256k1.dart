@@ -68,6 +68,6 @@ ThorSignature sign(Uint8List messageHash, Uint8List privateKey) {
 
 Uint8List recover(Uint8List messageHash, ThorSignature signature) {
   return web3dart.ecRecover(
-      messageHash,
+      messageHash, 
       signature.signature);
 }
