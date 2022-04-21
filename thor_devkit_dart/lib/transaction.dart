@@ -133,15 +133,45 @@ class Transaction {
   }
 
   String toJsonString() {
+/*
+        this.chainTag.setValueBigInt(BigInt.from(chainTag));
+    this.blockRef.setValue(blockRef);
+    this.expiration.setValueString(expiration);
+
+    this.gasPriceCoef.setValueString(gasPriceCoef);
+    this.gas.setValueString(gas);
+    this.dependsOn.setValue(dependsOn);
+    this.nonce.setValueString(nonce);
+    */
+    List<Map> c = [];
+    for (var clause in clauses) {
+      var _to;
+      var _value;
+      var _data = '';
+      if (clause.to.data != null) {
+        _to = '0x' + bytesToHex(clause.to.data!);
+      }
+            if (clause.value.big != null) {
+        _value = clause.value.big!.toInt();
+      }
+                  if (clause.data.data != null) {
+        _data = bytesToHex(clause.data.data!);
+      }
+      c.add({"to":_to, "value":_value, "data": '0x' + _data});
+    }
+    var dep;
+    if (dependsOn.data != null) {
+      dep = bytesToHex(dependsOn.data!);
+    }
     Map txMap = {
-      "chainTag": chainTag,
-      "blockRef": blockRef,
-      "expiration": expiration,
-      "clauses": clauses,
-      "gasPriceCoef": gasPriceCoef,
-      "gas": gas,
-      "dependsOn": dependsOn,
-      "nonce": nonce
+      "chainTag": chainTag.big!.toInt(),
+      "blockRef": '0x' + bytesToHex(blockRef.data!),
+      "expiration": expiration.big!.toInt(),
+      "clauses": c,
+      "gasPriceCoef": gasPriceCoef.big!.toInt(),
+      "gas": gas.big!.toInt(),
+      "dependsOn": dep,
+      "nonce": nonce.big!.toInt()
     };
 
     return json.encode(txMap);
