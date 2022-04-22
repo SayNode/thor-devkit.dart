@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:thor_devkit_dart/certificate.dart';
 import 'package:thor_devkit_dart/crypto/address.dart';
-import 'package:thor_devkit_dart/crypto/blake2b.dart';
 import 'package:thor_devkit_dart/crypto/secp256k1.dart';
 import 'package:thor_devkit_dart/utils.dart';
 
@@ -53,48 +52,4 @@ void main() {
 
     expect(() => c.verify(), throwsException);
   });
-
-/*
-    test('verify', () {
-
-      var PRIV_KEY = hexToBytes(
-    '7582be841ca040aa940fff6c05773129e135623e41acce3e0b8ba520dc1ae26a');
-
-var SIGNER = '0x' + Adress.publicKeyToAddressString(derivePublicKeyFromBytes(PRIV_KEY, false));
-
-var cert_dict = {
-    'purpose': 'identification',
-    'payload': {
-        'type': 'text',
-        'content': 'fyi'
-    },
-    'domain': 'localhost',
-    'timestamp': 1545035330,
-    'signer': SIGNER
-};
-Certificate cert = Certificate.fromMap(cert_dict);
-
-
-cert2_dict = {
-    'domain': 'localhost',
-    'timestamp': 1545035330,
-    'purpose': 'identification',
-    'signer': SIGNER,
-    'payload': {
-        'content': 'fyi',
-        'type': 'text'
-    }
-}
-cert2 = certificate.Certificate(**cert2_dict)
-
-    var to_be_signed, _ = blake2b256([
-        certificate.encode(cert).encode('utf-8')
-    ]);
-
-
-  });
-
-
-
-*/
 }

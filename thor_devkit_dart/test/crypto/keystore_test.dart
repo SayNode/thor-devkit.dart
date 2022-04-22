@@ -13,7 +13,6 @@ void main() {
         // Convert private key to keystore.
         String ks = Keystore.encrypt(hexToBytes(privateKeyHex), password);
         // Convert keystore to private key.
-        print(ks);
         Uint8List priv = Keystore.decrypt(ks, password);
         // Private key shall remain the same.
         expect(privateKeyHex, bytesToHex(priv));

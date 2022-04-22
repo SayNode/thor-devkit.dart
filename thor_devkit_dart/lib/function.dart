@@ -55,6 +55,8 @@ class ThorFunction {
     return function.encodeCall(out);
   }
 
+
+  //TODO: maybe change the way the return values are output
   ///Decode the return value of the function
   List decodeReturn(String data) {
     return function.decodeReturnValues(data);

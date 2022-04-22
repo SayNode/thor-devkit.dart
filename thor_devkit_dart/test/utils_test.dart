@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:thor_devkit_dart/utils.dart';
-import 'package:web3dart/credentials.dart';
 
 void main() {
   test('ascii to and from bytes', () {
