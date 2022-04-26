@@ -9,7 +9,7 @@ void main() {
   test('signature from bytes', () {});
 
 
-//FIXME: Fix this test, the matcher is might be wrong
+//FIXME: Fix this test, this test could be incorrect
   test('serialize', () {
     Uint8List priv = hexToBytes(
         "7582be841ca040aa940fff6c05773129e135623e41acce3e0b8ba520dc1ae26a");

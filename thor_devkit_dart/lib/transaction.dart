@@ -145,9 +145,9 @@ class Transaction {
     */
     List<Map> c = [];
     for (var clause in clauses) {
-      var _to;
-      var _value;
-      var _data = '';
+      String? _to;
+      int? _value;
+      String _data = '';
       if (clause.to.data != null) {
         _to = '0x' + bytesToHex(clause.to.data!);
       }
@@ -159,7 +159,7 @@ class Transaction {
       }
       c.add({"to":_to, "value":_value, "data": '0x' + _data});
     }
-    var dep;
+    String? dep;
     if (dependsOn.data != null) {
       dep = bytesToHex(dependsOn.data!);
     }

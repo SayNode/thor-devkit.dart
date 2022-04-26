@@ -30,7 +30,7 @@ void main() {
       "    ]," +
       "    \"payable\": false," +
       "    \"stateMutability\": \"nonpayable\"," +
-      "    \"type\": \"Thorfunction\"" +
+      "    \"type\": \"function\"" +
       "}";
 
            String f2 = 
