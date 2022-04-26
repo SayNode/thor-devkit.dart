@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:thor_devkit_dart/crypto/address.dart';
+import 'package:thor_devkit_dart/types/v1_param_wrapper.dart';
 import 'package:web3dart/contracts.dart';
 import 'package:web3dart/credentials.dart';
 
@@ -19,7 +20,7 @@ class ThorFunction {
 
     //parse outputs of function
     List<FunctionParameter> outputs = [];
-    for (var output in tempF['inputs']) {
+    for (var output in tempF['outputs']) {
       outputs
           .add(FunctionParameter(output['name'], parseAbiType(output['type'])));
     }
@@ -55,11 +56,16 @@ class ThorFunction {
     return function.encodeCall(out);
   }
 
+  //Decode return data into a list of V1ParamWrapper objects.
+  List<V1ParamWrapper> decodeReturnV1(String data) {
+    List<V1ParamWrapper> decoded = [];
 
-  //TODO: maybe change the way the return values are output
-  ///Decode the return value of the function
-  List decodeReturn(String data) {
-    return function.decodeReturnValues(data);
+    for (var i = 0; i < function.outputs.length; i++) {
+      decoded.add(V1ParamWrapper(i, function.outputs[i].name,
+          function.outputs[i].type.name, function.decodeReturnValues(data)[i]));
+    }
+
+    return decoded;
   }
 
   @override

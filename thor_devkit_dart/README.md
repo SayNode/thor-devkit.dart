@@ -314,7 +314,51 @@ import 'package:thor_devkit_dart/bloom.dart';
 ### ABI: Decode Function Return
 ```dart
 
-TODO: //add example for function return decoding.
+String f1 = """
+{
+    "constant": false,
+    "inputs": [
+        {
+            "name": "a1",
+            "type": "uint256"
+        },
+        {
+            "name": "a2",
+            "type": "string"
+        }
+    ],
+    "name": "f1",
+    "outputs": [
+        {
+            "name": "r1",
+            "type": "address"
+        },
+        {
+            "name": "r2",
+            "type": "bytes"
+        }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+}
+"""; // Function definition.
+
+ThorFunction f = ThorFunction(f1);
+
+// The function call return value.
+String data = "000000000000000000000000abc000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000003666f6f0000000000000000000000000000000000000000000000000000000000";
+
+
+
+// f.decodeReturnV1() returns  V1ParamWrapper objects
+List<V1ParamWrapper> result = f.decodeReturnV1(data);
+result[0].name;  // "r1"
+result[0].canonicalType; //"address"
+result[0].value; // "0xabc0000000000000000000000000000000000001"
+result[1].name;  // "r2"
+result[1].canonicalType; // "bytes"
+result[1].value; // "0x666f6f"
 
 ```
 
