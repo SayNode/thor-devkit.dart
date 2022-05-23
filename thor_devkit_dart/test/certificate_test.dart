@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:typed_data';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:thor_devkit_dart/certificate.dart';
@@ -14,7 +15,7 @@ void main() {
       "0x390870e4a99a6a80c3903e0bc13fdcaf15ae46d27b6365e3e07275990e3e74955ad43dba79682b9d0de3a47e96149539b07dde6b51c49a1c7eb6254036b913b000";
 
   test('verify correct', () {
-    Map<String, String> m = <String, String>{};
+    SplayTreeMap<String, String> m = SplayTreeMap<String, String>();
     m['content'] = 'fyi';
     m['type'] = 'text';
 
@@ -26,7 +27,7 @@ void main() {
   });
 
   test('not a valid sig', () {
-    Map<String, String> m = <String, String>{};
+    SplayTreeMap<String, String> m = SplayTreeMap<String, String>();
     m['type'] = 'text';
     m['content'] = 'fyi';
 
@@ -40,7 +41,7 @@ void main() {
   });
 
   test('not  match', () {
-    Map<String, String> m = <String, String>{};
+    SplayTreeMap<String, String> m = SplayTreeMap<String, String>();
     m['type'] = 'text';
     m['content'] = 'fyi';
 

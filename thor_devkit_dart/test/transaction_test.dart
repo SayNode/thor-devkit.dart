@@ -189,4 +189,36 @@ void main() {
 
 
   });
+
+    test('fromJsonString', () {
+    Map txMap = {
+      "chainTag": 39,
+      "blockRef": '0x00634b0a00639801',
+      "expiration": 720,
+      "clauses": [
+        {
+          "to": '0x0000000000000000000000000000000000000000',
+          "value": 1000000000000000000,
+          "data": '0x'
+        }
+      ],
+      "gasPriceCoef": 0,
+      "gas": 21000,
+      "dependsOn": null,
+      "nonce": 12345678
+    };
+
+    List<Clause> clauses = [
+      Clause("0x0000000000000000000000000000000000000000",
+          "1000000000000000000", "0x"),
+    ];
+    Transaction txMatcher = Transaction(39, "0x00634b0a00639801", "72000000",
+        clauses, "0", "21000", null, "12345678", null);
+
+    Transaction txActual = Transaction.fromJsonString(json.encode(txMap));
+
+    print(txMatcher.packUnsignedTxBody());
+
+
+  });
 }

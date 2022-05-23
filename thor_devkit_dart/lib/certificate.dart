@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:thor_devkit_dart/crypto/address.dart';
@@ -8,7 +9,7 @@ import 'package:thor_devkit_dart/utils.dart';
 
 class Certificate {
   late String purpose;
-  late Map payload;
+  late SplayTreeMap payload;
   late String domain;
   late int timestamp;
   late String signer;
@@ -42,19 +43,19 @@ class Certificate {
     signature = map['signature'];
   }
 
-  Map toMap() {
+  SplayTreeMap toMap() {
     String sig = '';
     if (signature != null) {
       sig = signature!;
     }
-    final map = <String, Object>{
-      'domain': domain,
-      'payload': payload,
-      'purpose': purpose,
-      'signer': signer,
-      'timestamp': timestamp,
-      'signature': sig
-    };
+    final SplayTreeMap<String, Object> map = SplayTreeMap<String, Object>();
+    map['domain'] = domain;
+    map['payload'] = payload;
+    map['purpose'] = purpose;
+    map['signer'] = signer;
+    map['timestamp'] = timestamp;
+    map['signature'] = sig;
+    print(map);
     return map;
   }
 
@@ -83,11 +84,11 @@ class Certificate {
     }
 
     // Compares if the signer matches with the signature.
-    Map temp = toMap();
+    SplayTreeMap temp = toMap();
     temp.remove("signature");
     //Certificate newCert = Certificate.fromMap(temp);
     String j = json.encode(temp);
-
+    print(j);
     var encoded = Uint8List.fromList(utf8.encode(j));
 
     Uint8List signingHash = blake2b256([encoded]);
@@ -99,9 +100,12 @@ class Certificate {
     Uint8List addrBytes = Address.publicKeyToAddressBytes(pubKey);
 
     String addr = ("0x" + bytesToHex(addrBytes)).toLowerCase();
-
     if (addr.compareTo(signer.toLowerCase()) != 0) {
       throw Exception("signature does not match with the signer.");
     }
   }
 }
+
+
+//{"domain":"localhost:62102","payload":{"content":"test","type":"text"},"purpose":"identification","signer":"0x85faec3f2af1e9998050e3dea4b0d63b66e28f04","timestamp":1653053556}
+//{"domain":"localhost:62102","payload":{"type":"text","content":"test"},"purpose":"identification","signer":"0x85faec3f2af1e9998050e3dea4b0d63b66e28f04","timestamp":1653053556}
