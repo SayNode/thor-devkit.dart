@@ -105,7 +105,3 @@ class Certificate {
     }
   }
 }
-
-
-//{"domain":"localhost:62102","payload":{"content":"test","type":"text"},"purpose":"identification","signer":"0x85faec3f2af1e9998050e3dea4b0d63b66e28f04","timestamp":1653053556}
-//{"domain":"localhost:62102","payload":{"type":"text","content":"test"},"purpose":"identification","signer":"0x85faec3f2af1e9998050e3dea4b0d63b66e28f04","timestamp":1653053556}
