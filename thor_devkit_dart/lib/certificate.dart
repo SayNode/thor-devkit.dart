@@ -55,7 +55,6 @@ class Certificate {
     map['signer'] = signer;
     map['timestamp'] = timestamp;
     map['signature'] = sig;
-    print(map);
     return map;
   }
 
@@ -88,7 +87,6 @@ class Certificate {
     temp.remove("signature");
     //Certificate newCert = Certificate.fromMap(temp);
     String j = json.encode(temp);
-    print(j);
     var encoded = Uint8List.fromList(utf8.encode(j));
 
     Uint8List signingHash = blake2b256([encoded]);
