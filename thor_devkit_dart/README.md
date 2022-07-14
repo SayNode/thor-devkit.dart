@@ -13,6 +13,8 @@ and the Flutter guide for
 
 # VeChain Thor Devkit (SDK) in Dart
 
+Installation: https://pub.dev/packages/thor_devkit_dart
+
 Dart package to assist smooth development on VeChain for developers and hobbyists.
 
 |                          Content                          |
