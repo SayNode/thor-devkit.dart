@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:thor_devkit_dart/crypto/keccak.dart';
 import 'package:thor_devkit_dart/utils.dart';
 

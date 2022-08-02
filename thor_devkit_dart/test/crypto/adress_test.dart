@@ -2,7 +2,7 @@ import 'dart:core';
 import 'dart:typed_data';
 import 'package:thor_devkit_dart/utils.dart';
 import 'package:thor_devkit_dart/crypto/address.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 void main() {
   test('is adress test', () {

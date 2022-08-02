@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:core';
 import 'package:rlp/rlp.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:thor_devkit_dart/types/rlp.dart';
 
 void main() {

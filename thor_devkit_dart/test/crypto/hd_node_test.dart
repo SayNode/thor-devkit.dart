@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:thor_devkit_dart/crypto/hd_node.dart';
 import 'package:thor_devkit_dart/utils.dart';
 

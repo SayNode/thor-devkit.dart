@@ -35,11 +35,7 @@ Dart package to assist smooth development on VeChain for developers and hobbyist
 ... and will always be updated with the **newest** features on VeChain.
 
 # Steps to test the package:
-- Install VS Code: https://code.visualstudio.com/
-- Add Dart Extension: https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code
-- Open the package as new project
-- On the left toolbar click on "Test"
-- Run the existing tests or add new ones
+- run 'dart test' in project root
 
 # Usage
 
