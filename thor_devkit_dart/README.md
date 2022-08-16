@@ -13,7 +13,10 @@ and the Flutter guide for
 
 # VeChain Thor Devkit (SDK) in Dart
 
-Installation: https://pub.dev/packages/thor_devkit_dart
+To use the library in your Flutter application refer to the official documentation on pub.dev: https://pub.dev/packages/thor_devkit_dart.
+
+You can skip this step if you want to contribute to the development of this library.
+
 
 Dart package to assist smooth development on VeChain for developers and hobbyists.
 
@@ -34,8 +37,25 @@ Dart package to assist smooth development on VeChain for developers and hobbyist
 
 ... and will always be updated with the **newest** features on VeChain.
 
-# Steps to test the package:
-- run 'dart test' in project root
+# Steps to contribute to the library development and test the package:
+
+If you want to contribute to the library development, you probably want to __clone__ this repository on your local machine.
+Once you have the source code locally on your machine, you can look at the code with the IDE of your choice.
+
+If you want to suggest changes or updates please create a pull request that can be reviewed by the maintainers and the community.
+
+
+If you want to __run the tests__ you can follow this steps (linux or macOS):
+
+- install __git__ if you have not installed it yet [https://git-scm.com/](https://git-scm.com/)
+- install __dart__ if you have not installed it yet [https://dart.dev/get-dart](https://dart.dev/get-dart)
+- chose a folder on your machine to host this project e.g. `~/Documents/`
+- open the terminal and get into the folder you just chose, e.g. `cd ~/Documents/`
+- clone this repository on your local machine in the folder you have just created using `git clone https://github.com/SayNode/thor-devkit.dart.git`
+- go further down in the directory hiererchy until your terminal points to `~/Documents/thor-devkit.dart/thor_devkit_dart` (you can verify at what level you are using the `pwd` command. E.g. `cd ~/Documents/thor-devkit.dart/thor_devkit_dart`
+- run `dart test`
+
+This shall run the tests that have been written to verify the correct functioning of the thor_devkit functionality.
 
 # Usage
 
