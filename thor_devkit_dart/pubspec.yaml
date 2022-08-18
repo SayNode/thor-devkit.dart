@@ -8,7 +8,6 @@ environment:
 
 dependencies:
   pointycastle: ^3.5.2
-  r_crypto: ^0.5.0
   web3dart: ^2.3.5
   bip39: ^1.0.6
   bip32: ^2.0.0
