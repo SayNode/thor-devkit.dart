@@ -1,6 +1,6 @@
 name: thor_devkit_dart
 description: Dart package to assist smooth development on VeChain for developers and hobbyists.
-version: 1.0.0
+version: 1.0.1
 repository: https://github.com/SayNode/thor-devkit.dart/tree/main/thor_devkit_dart
 
 environment:
