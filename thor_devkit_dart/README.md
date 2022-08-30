@@ -59,6 +59,8 @@ This shall run the tests that have been written to verify the correct functionin
 
 # Usage
 
+We wrote a small totorial on how to use this package with a quick example: https://medium.com/@SayNode_/flutter-dapps-made-easy-with-the-thor-devkit-dart-and-thor-request-dart-c956eaedac5d
+
 ### Private/Public Keys
 ```dart
 import 'package:thor_devkit_dart/crypto/address.dart';
