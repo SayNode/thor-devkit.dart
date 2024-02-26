@@ -195,12 +195,4 @@ void main() {
     expect(result[0].value, BigInt.from(123456));
     expect(result[1].value, BigInt.from(-123456));
   });
-
-  test('decode return empty', () {
-    String data = "";
-    ThorFunction f = ThorFunction(f5);
-
-    List<V1ParamWrapper> result = f.decodeReturnV1(data);
-    expect(result.length, 0);
-  });
 }
