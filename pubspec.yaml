@@ -7,16 +7,16 @@ environment:
   sdk: ^3.0.0
 
 dependencies:
-  pointycastle: ^3.5.2
-  web3dart: ^2.3.5
+  pointycastle: ^3.7.4
+  web3dart: ^2.7.2
   bip39: ^1.0.6
   bip32: ^2.0.0
-  base_x: ^2.0.0
+  base_x: ^2.0.1
   rlp: ^2.0.0
-  convert: ^3.0.2
+  convert: ^3.1.1
 
 
 dev_dependencies:
-  test: ^1.21.1
+  test: ^1.25.2
 
 
