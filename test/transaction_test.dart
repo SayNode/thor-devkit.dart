@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+
 import 'package:test/test.dart';
 import 'package:thor_devkit_dart/crypto/address.dart';
 import 'package:thor_devkit_dart/crypto/blake2b.dart';
@@ -186,11 +187,9 @@ void main() {
     Transaction txActual = Transaction.fromJsonString(json.encode(txMap));
 
     expect(txActual.clauses.length, txMatcher.clauses.length);
-
-
   });
 
-    test('fromJsonString', () {
+  test('fromJsonString', () {
     Map txMap = {
       "chainTag": 39,
       "blockRef": '0x00634b0a00639801',
@@ -218,7 +217,5 @@ void main() {
     Transaction txActual = Transaction.fromJsonString(json.encode(txMap));
 
     print(txMatcher.packUnsignedTxBody());
-
-
   });
 }

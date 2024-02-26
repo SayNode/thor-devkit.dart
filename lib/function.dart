@@ -15,7 +15,16 @@ class ThorFunction {
     //parse inputs/parameters of function into FunctionParameters
     List<FunctionParameter> inputs = [];
     for (var input in tempF['inputs']) {
-      inputs.add(FunctionParameter(input['name'], parseAbiType(input['type'])));
+      if (input['type'] == 'tuple') {
+        List<AbiType> components = [];
+        for (var component in input['components']) {
+          components.add(parseAbiType(component['type']));
+        }
+        inputs.add(FunctionParameter(input['name'], TupleType(components)));
+      } else {
+        inputs
+            .add(FunctionParameter(input['name'], parseAbiType(input['type'])));
+      }
     }
 
     //parse outputs of function
@@ -36,8 +45,7 @@ class ThorFunction {
     return function.selector;
   }
 
-  ///Encode the parameters to Uint8List
-  Uint8List encode(List args) {
+  List _encode(List args) {
     List out = [];
     for (var i = 0; i < args.length; i++) {
       if (args[i] is String) {
@@ -46,13 +54,19 @@ class ThorFunction {
         } else {
           out.add(args[i]);
         }
+      } else if (args[i] is List) {
+        out.add(_encode(args[i]));
       } else {
         out.add(args[i]);
       }
     }
 
-    //EthereumAddress a = EthereumAddress.fromHex(args[0]);
-    //return function.encodeCall([a]);
+    return out;
+  }
+
+  ///Encode the parameters to Uint8List
+  Uint8List encode(List args) {
+    List out = _encode(args);
     return function.encodeCall(out);
   }
 

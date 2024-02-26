@@ -4,7 +4,7 @@ version: 1.0.1
 repository: https://github.com/SayNode/thor-devkit.dart/tree/main/thor_devkit_dart
 
 environment:
-  sdk: ">=2.16.1 <3.0.0"
+  sdk: ^3.0.0
 
 dependencies:
   pointycastle: ^3.5.2
