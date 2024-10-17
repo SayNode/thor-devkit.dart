@@ -8,3 +8,6 @@ Removed flutter as a dependency and updated readme
 Added support for tuples in function arguments
 Bumped dependencies
 
+## 1.1.1
+Fixed Bug in function encoding
+
