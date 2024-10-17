@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
+
 import 'package:pointycastle/digests/keccak.dart';
 import 'package:thor_devkit_dart/utils.dart';
 
 class Address {
-
   ///Check if the public key is 65 bytes, and starts with 4.
   static bool isUncompressedPublicKey(Uint8List input) {
     if (input.length != 65) {
@@ -52,7 +52,7 @@ class Address {
   static String toChecksumAddress(String input) {
     String body = remove0x(input).toLowerCase();
     final digest = KeccakDigest(256);
-    var x = utf8.encode(body) as Uint8List;
+    var x = utf8.encode(body);
     var h = digest.process(x);
 
     String hash = bytesToHex(h);

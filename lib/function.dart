@@ -46,22 +46,27 @@ class ThorFunction {
   }
 
   List _encode(List args) {
-    List out = [];
-    for (var i = 0; i < args.length; i++) {
-      if (args[i] is String) {
-        if (Address.isAddress(args[i])) {
-          out.add(EthereumAddress.fromHex(args[i]));
+    try {
+      List<int> intList = args as List<int>;
+      return Uint8List.fromList(intList);
+    } catch (_) {
+      List out = [];
+      for (var i = 0; i < args.length; i++) {
+        if (args[i] is String) {
+          if (Address.isAddress(args[i])) {
+            out.add(EthereumAddress.fromHex(args[i]));
+          } else {
+            out.add(args[i]);
+          }
+        } else if (args[i] is List) {
+          out.add(_encode(args[i]));
         } else {
           out.add(args[i]);
         }
-      } else if (args[i] is List) {
-        out.add(_encode(args[i]));
-      } else {
-        out.add(args[i]);
       }
-    }
 
-    return out;
+      return out;
+    }
   }
 
   ///Encode the parameters to Uint8List
